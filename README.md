@@ -58,15 +58,14 @@ console.log(user)
 
 ## Why use Instructor?
 
-The question of using Instructor is fundamentally a question of why to use zod.
 
-1. **Powered by OpenAI** — Instructor is powered by OpenAI's function calling API. This means you can use the same API for both prompting and extraction.
+1. **OpenAI Integration** — Active Record integrates seamlessly with OpenAI's API, facilitating efficient data management and manipulation.
 
-2. **Customizable** — Zod is highly customizable. You can define your own validators, custom error messages, and more.
+2. **Customizable** — It offers significant flexibility. Users can tailor validation processes and define unique error messages.
 
-3. **Ecosystem** Zod is the most widely used data validation library for Typescript.
+3. **Widespread Adoption** — As a primary component in Ruby on Rails, it's widely used and backed by a substantial community.
 
-4. **Battle Tested** — Zod is downloaded over 24M times per month, and supported by a large community of contributors.
+4. **Tested and Trusted** — Its reliability is proven by extensive real-world application, underscored by its high adoption rate in Ruby-based projects.
 
 ## More Examples
 
