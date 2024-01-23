@@ -42,6 +42,24 @@ RSpec.describe Instructor::DSL::ConditionalRequire do
   context 'if/then/else' do
     let(:vehicle) { described_class.new }
 
+    let(:expected_output) do
+      {
+        'if' => {
+          'properties' => {
+            'type' => {
+              "const": 'car'
+            }
+          }
+        },
+        'then' => {
+          "required": %w[
+            make
+            model
+          ]
+        }
+      }
+    end
+
     it 'outputs if/then/else clause in json-schema' do
       vehicle.if do |condition|
         condition.properties do |attr|
@@ -57,7 +75,6 @@ RSpec.describe Instructor::DSL::ConditionalRequire do
         end
       end
 
-      binding.pry
       expect(vehicle.to_json).to eq(expected_output.to_json)
     end
   end

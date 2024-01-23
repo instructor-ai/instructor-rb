@@ -7,19 +7,19 @@ module Instructor
         @structure = {}
       end
 
-      def if(&block)
-        @structure["if"] = {}
-        yield(Property.new(@structure["if"]))
+      def if
+        @structure['if'] = {}
+        yield(Property.new(@structure['if']))
       end
 
-      def then(&block)
-        @structure["then"] = {}
-        yield(Requirement.new(@structure["then"]))
+      def then
+        @structure['then'] = {}
+        yield(Requirement.new(@structure['then']))
       end
 
-      def else(&block)
-        @structure["else"] = {}
-        yield(Requirement.new(@structure["else"]))
+      def else
+        @structure['else'] = {}
+        yield(Requirement.new(@structure['else']))
       end
 
       def to_json(*options)
@@ -31,13 +31,13 @@ module Instructor
           @structure = structure
         end
 
-        def properties(&block)
-          @structure["properties"] = {}
+        def properties
+          @structure['properties'] = {}
           yield(self)
         end
 
-        def method_missing(name, *args, &block)
-          @structure["properties"][name.to_s] = {"const" => args.first}
+        def method_missing(name, *args)
+          @structure['properties'][name.to_s] = { 'const' => args.first }
         end
       end
 
@@ -47,7 +47,7 @@ module Instructor
         end
 
         def required(*args)
-          @structure["required"] = args
+          @structure['required'] = args
         end
       end
     end

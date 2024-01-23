@@ -1,23 +1,23 @@
-require "active_support/all"
+require 'active_support/all'
 
 module Instructor
   class ModelSerializer
     DATETIME_TYPE_MAPPINGS = {
-      ActiveModel::Type::Date => "date",
-      ActiveModel::Type::DateTime => "date-time",
-      ActiveModel::Type::Time => "time"
+      ActiveModel::Type::Date => 'date',
+      ActiveModel::Type::DateTime => 'date-time',
+      ActiveModel::Type::Time => 'time'
     }.freeze
 
     TYPE_MAPPINGS = {
-      ActiveModel::Type::String => "string",
-      ActiveModel::Type::Integer => "integer",
-      ActiveModel::Type::Float => "number",
-      ActiveModel::Type::Decimal => "number",
-      ActiveModel::Type::Boolean => "boolean",
-      ActiveModel::Type::Date => "string",
-      ActiveModel::Type::DateTime => "string",
-      ActiveModel::Type::Time => "string",
-      Instructor::Type::Array => "array",
+      ActiveModel::Type::String => 'string',
+      ActiveModel::Type::Integer => 'integer',
+      ActiveModel::Type::Float => 'number',
+      ActiveModel::Type::Decimal => 'number',
+      ActiveModel::Type::Boolean => 'boolean',
+      ActiveModel::Type::Date => 'string',
+      ActiveModel::Type::DateTime => 'string',
+      ActiveModel::Type::Time => 'string',
+      Instructor::Type::Array => 'array'
     }.freeze
 
     def initialize(model)
@@ -31,7 +31,7 @@ module Instructor
     def build_schema
       {
         description: "#{model.name.underscore.humanize} model",
-        type: "object",
+        type: 'object',
         properties: model_attributes,
         required: required_attributes
       }.compact
@@ -104,7 +104,7 @@ module Instructor
     end
 
     def json_type_for(type)
-      TYPE_MAPPINGS[type] || "string" # default type
+      TYPE_MAPPINGS[type] || 'string' # default type
     end
   end
 end
