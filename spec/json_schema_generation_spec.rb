@@ -87,7 +87,6 @@ RSpec.describe "json-schema serialization" do
   end
 
   it "converts to json schema" do
-    binding.pry
     expect(user_detail).to eq(JSON.generate(user_schema))
   end
 end
