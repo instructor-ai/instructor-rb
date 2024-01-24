@@ -65,14 +65,14 @@ RSpec.describe Instructor::DSL::ConditionalRequire do
         condition.properties do |attr|
           attr.type 'car'
         end
+      end
 
-        condition.then do |requirement|
-          requirement.required 'make', 'model'
-        end
+      vehicle.then do |requirement|
+        requirement.required 'make', 'model'
+      end
 
-        condition.else do |requirement|
-          requirement.required 'make'
-        end
+      vehicle.else do |requirement|
+        requirement.required 'make'
       end
 
       expect(vehicle.to_json).to eq(expected_output.to_json)
