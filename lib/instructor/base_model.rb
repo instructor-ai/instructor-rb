@@ -1,11 +1,5 @@
-require 'active_model'
+require 'dry-validation'
 
-module Instructor
-  class BaseModel
-    include ActiveModel::Model
-    include ActiveModel::Attributes
-    include ActiveModel::AttributeAssignment
-    include ActiveModel::Validations
-    include ActiveModel::Conversion
-  end
+Dry::Schema.load_extensions(:json_schema)
+class BaseModel < Dry::Validation::Contract
 end
