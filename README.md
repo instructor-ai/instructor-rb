@@ -17,11 +17,20 @@ Dive into the world of Ruby-based structured extraction, by OpenAI's function ca
 
     - [Python](https://www.github.com/jxnl/instructor)
     - [TS/JS](https://github.com/instructor-ai/instructor-js/)
+    - [Ruby](https://github.com/instructor-ai/instructor-rb)
     - [Elixir](https://github.com/thmsmlr/instructor_ex/)
 
     If you want to port Instructor to another language, please reach out to us on [Twitter](https://twitter.com/jxnlco) we'd love to help you get started!
 
 ## Usage
+
+export your OpenAI API key:
+
+```bash
+export OPENAI_API_KEY=sk-...
+```
+
+Then use Instructor to extract structured data from text in Ruby:
 
 ```ruby
 require 'instructor'
@@ -50,7 +59,7 @@ puts(user.inspect)
 ## Why use Instructor?
 
 
-1. **OpenAI Integration** — Active Record integrates seamlessly with OpenAI's API, facilitating efficient data management and manipulation.
+1. **OpenAI Integration** — Integrates seamlessly with OpenAI's API, facilitating efficient data management and manipulation.
 
 2. **Customizable** — It offers significant flexibility. Users can tailor validation processes and define unique error messages.
 
