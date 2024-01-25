@@ -15,7 +15,7 @@ module Instructor
         func = generate_function(response_model)
         params = parameters.merge(tools: [func])
         response = @client.chat(parameters: params)
-        function_response = get_function_res(response)
+        function_response = get_parsed_res(response)
         model = response_model.new
         model.call(function_response)
       end
@@ -31,7 +31,7 @@ module Instructor
         }
       end
 
-      def get_function_res(response)
+      def get_parsed_res(response)
         str = response.dig('choices', 0, 'message', 'tool_calls', 0, 'function', 'arguments')
         JSON.parse(str)
       end
