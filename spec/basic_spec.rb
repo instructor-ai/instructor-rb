@@ -1,26 +1,25 @@
 require 'spec_helper'
 
-RSpec.describe '' do
+RSpec.describe 'running an OpenAI function call' do
   class UserDetail < BaseModel
-    schema do
+    params do
       required(:name).filled(:string)
       required(:age).filled(:integer)
     end
   end
 
-  it '' do
-    client = Instructor.patch(OpenAI::Client.new)
+  it 'returns an object with the expected valid attribute values' do
+    client = Instructor::OpenAI::Client.new
 
     user = client.chat(
       parameters: {
-        model: 'gpt-3.5-turbo', # Required.
-        messages: [{ role: 'user', content: 'Extract Jason is 25 years old' }], # Required.
-        temperature: 0.7
+        model: 'gpt-3.5-turbo',
+        messages: [{ role: 'user', content: 'Extract Jason is 25 years old' }]
       },
       response_model: UserDetail
     )
-    # assert isinstance(user, UserDetail)
-    # assert user.name == 'Jason'
-    # assert user.age == 25
+
+    expect(user[:name]).to eq('Jason')
+    expect(user[:age]).to eq(25)
   end
 end
