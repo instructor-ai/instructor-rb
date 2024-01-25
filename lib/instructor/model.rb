@@ -1,5 +1,5 @@
 require 'dry-validation'
 
 Dry::Schema.load_extensions(:json_schema)
-class BaseModel < Dry::Validation::Contract
+class Instructor::Model < Dry::Validation::Contract
 end

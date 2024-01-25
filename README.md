@@ -23,37 +23,28 @@ Dive into the world of Ruby-based structured extraction, by OpenAI's function ca
 
 ## Usage
 
-```rb
-# Todo, change to ruby
-import Instructor from "@instructor-ai/instructor";
-import OpenAI from "openai"
-import { z } from "zod"
+```ruby
+require 'instructor'
 
-const UserSchema = z.object({
-  age: z.number(),
-  name: z.string()
-})
+class UserDetail < Instructor::Model
+  params do
+    required(:name).filled(:string)
+    required(:age).filled(:integer)
+  end
+end
 
-type User = z.infer<typeof UserSchema>
+client = Instructor::OpenAI::Client.new
 
-const oai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY ?? undefined,
-  organization: process.env.OPENAI_ORG_ID ?? undefined
-})
+user = client.chat(
+  parameters: {
+    model: 'gpt-3.5-turbo',
+    messages: [{ role: 'user', content: 'Extract Jason is 25 years old' }]
+  },
+  response_model: UserDetail
+)
 
-const client = Instructor({
-  client: oai,
-  mode: "FUNCTIONS" # or "TOOLS" or "MD_JSON" or "JSON"
-})
-
-const user = await client.chat.completions.create({
-  messages: [{ role: "user", content: "Jason Liu is 30 years old" }],
-  model: "gpt-3.5-turbo",
-  response_model: { schema: UserSchema }
-})
-
-console.log(user)
-// { age: 30, name: "Jason Liu" }
+puts(user.inspect)
+#=> #<Dry::Validation::Result{:name=>"Jason", :age=>25} errors={}>
 ```
 
 ## Why use Instructor?

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe 'running an OpenAI function call' do
-  class UserDetail < BaseModel
+  class UserDetail < Instructor::Model
     params do
       required(:name).filled(:string)
       required(:age).filled(:integer)

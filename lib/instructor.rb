@@ -3,7 +3,7 @@
 require 'openai'
 require 'active_support/all'
 require_relative 'instructor/version'
-require_relative 'instructor/base_model'
+require_relative 'instructor/model'
 require_relative 'instructor/openai/client'
 
 module Instructor
