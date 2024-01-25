@@ -8,8 +8,4 @@ require_relative 'instructor/openai/client'
 
 module Instructor
   class Error < StandardError; end
-
-  def self.patch(library)
-    library.append(BaseModel)
-  end
 end
