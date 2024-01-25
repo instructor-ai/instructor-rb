@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+require 'openai'
+require 'active_support/all'
+require_relative 'instructor/version'
+require_relative 'instructor/model'
+require_relative 'instructor/openai/client'
+
+module Instructor
+  class Error < StandardError; end
+end
