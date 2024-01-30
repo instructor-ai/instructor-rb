@@ -33,5 +33,8 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'activesupport', '~> 6.1.3'
   spec.add_dependency 'dry-validation', '~> 1.10'
-  spec.add_dependency 'ruby-openai', '~> 0.1.0'
+  spec.add_dependency 'dry-types', '~> 1.6'
+  spec.add_dependency 'dry-schema', '~> 1.13'
+  spec.add_dependency 'dry-struct', '~> 1.6'
+  spec.add_dependency 'ruby-openai', '6.3.1'
 end

@@ -3,11 +3,21 @@ PATH
   specs:
     instructor-rb (0.1.0)
       activesupport (~> 6.1.3)
+      dry-schema (~> 1.13)
+      dry-struct (~> 1.6)
+      dry-types (~> 1.6)
       dry-validation (~> 1.10)
-      ruby-openai (~> 0.1.0)
+      ruby-openai (= 6.3.1)
+
+PATH
+  remote: /Users/sergiobayona/Code/instructor-ai/ruby-openai
+  specs:
+    ruby-openai (6.3.1)
+      event_stream_parser (>= 0.3.0, < 2.0.0)
+      faraday (>= 1)
+      faraday-multipart (>= 1)
 
 GEM
-  remote: https://rubygems.org/
   specs:
     activesupport (6.1.7.6)
       concurrent-ruby (~> 1.0, >= 1.0.2)
@@ -20,7 +30,6 @@ GEM
     coderay (1.1.3)
     concurrent-ruby (1.2.3)
     diff-lcs (1.5.0)
-    dotenv (2.7.6)
     dry-configurable (1.1.0)
       dry-core (~> 1.0, < 2)
       zeitwerk (~> 2.6)
@@ -41,6 +50,11 @@ GEM
       dry-logic (>= 1.4, < 2)
       dry-types (>= 1.7, < 2)
       zeitwerk (~> 2.6)
+    dry-struct (1.6.0)
+      dry-core (~> 1.0, < 2)
+      dry-types (>= 1.7, < 2)
+      ice_nine (~> 0.11)
+      zeitwerk (~> 2.6)
     dry-types (1.7.2)
       bigdecimal (~> 3.0)
       concurrent-ruby (~> 1.0)
@@ -54,21 +68,25 @@ GEM
       dry-initializer (~> 3.0)
       dry-schema (>= 1.12, < 2)
       zeitwerk (~> 2.6)
-    httparty (0.18.1)
-      mime-types (~> 3.0)
-      multi_xml (>= 0.5.2)
+    event_stream_parser (1.0.0)
+    faraday (2.9.0)
+      faraday-net_http (>= 2.0, < 3.2)
+    faraday-multipart (1.0.4)
+      multipart-post (~> 2)
+    faraday-net_http (3.1.0)
+      net-http
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
+    ice_nine (0.11.2)
     json (2.7.1)
     language_server-protocol (3.17.0.3)
     method_source (1.0.0)
-    mime-types (3.5.2)
-      mime-types-data (~> 3.2015)
-    mime-types-data (3.2023.1205)
     minitest (5.21.2)
-    multi_xml (0.6.0)
+    multipart-post (2.3.0)
+    net-http (0.4.1)
+      uri
     parallel (1.24.0)
-    parser (3.3.0.4)
+    parser (3.3.0.5)
       ast (~> 2.4.1)
       racc
     pry (0.14.2)
@@ -91,7 +109,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
     rspec-support (3.12.1)
-    rubocop (1.60.1)
+    rubocop (1.60.2)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
       parallel (~> 1.10)
@@ -104,13 +122,11 @@ GEM
       unicode-display_width (>= 2.4.0, < 3.0)
     rubocop-ast (1.30.0)
       parser (>= 3.2.1.0)
-    ruby-openai (0.1.4)
-      dotenv (~> 2.7.6)
-      httparty (~> 0.18.1)
     ruby-progressbar (1.13.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.5.0)
+    uri (0.13.0)
     zeitwerk (2.6.12)
 
 PLATFORMS
@@ -122,6 +138,7 @@ DEPENDENCIES
   pry (~> 0.13)
   rspec (~> 3.0)
   rubocop (~> 1.21)
+  ruby-openai!
 
 BUNDLED WITH
    2.5.4
