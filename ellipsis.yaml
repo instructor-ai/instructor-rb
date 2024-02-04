@@ -1,0 +1,38 @@
+# See https://docs.ellipsis.dev for all available configurations.
+
+version: 1.1
+pr_review:
+  auto_review_enabled: true  # enable auto-review of PRs
+  auto_summarize_pr: true  # enable auto-summary of PRs
+  confidence_threshold: 0.5  # Threshold for how confident Ellipsis needs to be in order to leave a comment, in range [0.0-1.0]
+  rules:  # customize behavior
+    - "Code should be DRY (Don't Repeat Yourself)"
+    - "There should no secrets or credentials in the code"
+
+  # users can customize their own behavior
+  user_overrides:
+    # @hbrooks has disabled auto-summary and added a custom rule
+    - usernames: ["hbrooks"]
+      auto_summarize_pr: false
+      rules:
+        - "Code should be DRY (Don't Repeat Yourself)"
+
+
+# Below is an example of how to configure Ellipsis to build and run your repo.
+# Uncomment and replace with your own Dockerfile and commands.
+
+dockerfile: "ellipsis.Dockerfile"  # this will be used to build your repo
+
+#=======================
+# commands: 
+#   - name: "build"
+#     description: "This command compiles the code and builds the project"
+#     command: "yarn build"
+#     return_output_on_success: false  # If output isn't useful when the command succeeds
+#     auto_repair: true  # Run this after every code change
+#   - name: "lint_fix"
+#     description: "Lints the code in fix mode, which will fix some errors."
+#     command: "yarn lint:fix"
+#     return_output_on_success: false
+#     auto_repair: true
+#=======================
