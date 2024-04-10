@@ -1,15 +1,18 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe 'running an OpenAI function call' do
-  class UserDetail < Instructor::Model
-    params do
-      required(:name).filled(:string)
-      required(:age).filled(:integer)
+  class UserDetail
+    include EasyTalk::Model
+    define_schema do
+      property :name, String
+      property :age, Integer
     end
   end
 
-  it 'returns an object with the expected valid attribute values' do
-    client = Instructor::OpenAI::Client.new
+  it 'returns an object with the expected valid attribute values', vcr: 'basic_spec/valid_response' do
+    client = Instructor.patch(OpenAI::Client).new
 
     user = client.chat(
       parameters: {
@@ -19,7 +22,7 @@ RSpec.describe 'running an OpenAI function call' do
       response_model: UserDetail
     )
 
-    expect(user[:name]).to eq('Jason')
-    expect(user[:age]).to eq(25)
+    expect(user['name']).to eq('Jason')
+    expect(user['age']).to eq(25)
   end
 end

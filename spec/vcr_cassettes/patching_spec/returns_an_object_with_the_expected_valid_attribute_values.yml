@@ -1,0 +1,114 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-3.5-turbo","messages":[{"role":"user","content":"Extract
+        Jason is 25 years old"}],"tools":[{"type":"function","function":{"name":"Userdetail","description":"Correctly
+        extracted `UserDetail` with all the required parameters with correct types","parameters":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"]}}}]}'
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <API_KEY_PLACEHOLDER>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 12 Apr 2024 17:28:30 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - no-cache, must-revalidate
+      Openai-Model:
+      - gpt-3.5-turbo-0125
+      Openai-Organization:
+      - user-jtftkqrbreteg5pmdrfzchv6
+      Openai-Processing-Ms:
+      - '930'
+      Openai-Version:
+      - '2020-10-01'
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '60000'
+      X-Ratelimit-Remaining-Requests:
+      - '9999'
+      X-Ratelimit-Remaining-Tokens:
+      - '59975'
+      X-Ratelimit-Reset-Requests:
+      - 8.64s
+      X-Ratelimit-Reset-Tokens:
+      - 25ms
+      X-Request-Id:
+      - req_9756569e71879ab6be364ad3867bd6d7
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=rzlVehS9n3tZmtJX.f6u8MM5u3XdQvCa8lV4TKqsV.E-1712942910-1.0.1.1-nTWILKPiltMkM0e4zgTzTBfTbTlsN8KNxD3iqAWDrHO9mSPwnVFPGj68tBg28S2Ybhxyi1JdcyqcUEjKjn2.lQ;
+        path=/; expires=Fri, 12-Apr-24 17:58:30 GMT; domain=.api.openai.com; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=r5WzoxgBOqUoewzkK5jZ0JKM9hXvG7l903X_4.UQMho-1712942910996-0.0.1.1-604800000;
+        path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 8734eee2d8fda4da-MIA
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-9DEzORMSGtIw1TnIeW78mWghKLBBj",
+          "object": "chat.completion",
+          "created": 1712942910,
+          "model": "gpt-3.5-turbo-0125",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": null,
+                "tool_calls": [
+                  {
+                    "id": "call_Ne5NQykv1UTc46xtzjncWWvS",
+                    "type": "function",
+                    "function": {
+                      "name": "Userdetail",
+                      "arguments": "{\"name\": \"Jason\", \"age\": 25}"
+                    }
+                  }
+                ]
+              },
+              "logprobs": null,
+              "finish_reason": "tool_calls"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 65,
+            "completion_tokens": 33,
+            "total_tokens": 98
+          },
+          "system_fingerprint": "fp_b28b39ffa8"
+        }
+  recorded_at: Fri, 12 Apr 2024 17:28:30 GMT
+recorded_with: VCR 6.2.0

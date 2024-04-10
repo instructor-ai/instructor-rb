@@ -1,0 +1,143 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-3.5-turbo","messages":[{"role":"system","content":"The
+        following is a transcript of a meeting between a manager and their team. The
+        manager is assigning tasks to their team members and creating action items
+        for them to complete."},{"role":"user","content":"Create the action items
+        for the following transcript: Alice: Hey team, we have several critical tasks
+        we need to tackle for the upcoming release. First, we need to work on improving
+        the authentication system. It''s a top priority.\n\nBob: Got it, Alice. I
+        can take the lead on the authentication improvements. Are there any specific
+        areas you want me to focus on?\n\nAlice: Good question, Bob. We need both
+        a front-end revamp and back-end optimization. So basically, two sub-tasks.\n\nCarol:
+        I can help with the front-end part of the authentication system.\n\nBob: Great,
+        Carol. I''ll handle the back-end optimization then.\n\nAlice: Perfect. Now,
+        after the authentication system is improved, we have to integrate it with
+        our new billing system. That''s a medium priority task.\n\nCarol: Is the new
+        billing system already in place?\n\nAlice: No, it''s actually another task.
+        So it''s a dependency for the integration task. Bob, can you also handle the
+        billing system?\n\nBob: Sure, but I''ll need to complete the back-end optimization
+        of the authentication system first, so it''s dependent on that.\n\nAlice:
+        Understood. Lastly, we also need to update our user documentation to reflect
+        all these changes. It''s a low-priority task but still important.\n\nCarol:
+        I can take that on once the front-end changes for the authentication system
+        are done. So, it would be dependent on that.\n\nAlice: Sounds like a plan.
+        Let''s get these tasks modeled out and get started.\n"}],"tools":[{"type":"function","function":{"name":"Actionitems","description":"Correctly
+        extracted `ActionItems` with all the required parameters with correct types","parameters":{"type":"object","properties":{"items":{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer","description":"Unique
+        identifier for the ticket"},"name":{"type":"string","description":"Title of
+        the ticket"},"description":{"type":"string","description":"Detailed description
+        of the ticket"},"priority":{"type":"string","description":"Priority level"},"assignees":{"type":"array","items":{"type":"string"},"description":"List
+        of users assigned to the ticket"},"subtasks":{"anyOf":[{"type":"array","items":{"type":"object","properties":{"id":{"type":"integer","description":"Unique
+        identifier for the subtask"},"name":{"type":"string","description":"Informative
+        title of the subtask"}},"required":["id","name"]},"description":"List of subtasks
+        associated with the ticket"},{"type":"null"}]},"dependencies":{"anyOf":[{"type":"array","items":{"type":"integer"},"description":"List
+        of ticket IDs that this ticket depends on"},{"type":"null"}]}},"required":["id","name","description","priority","assignees"]}}},"required":["items"]}}}]}'
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <API_KEY_PLACEHOLDER>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 12 Apr 2024 18:42:05 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - no-cache, must-revalidate
+      Openai-Model:
+      - gpt-3.5-turbo-0125
+      Openai-Organization:
+      - user-jtftkqrbreteg5pmdrfzchv6
+      Openai-Processing-Ms:
+      - '2596'
+      Openai-Version:
+      - '2020-10-01'
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '60000'
+      X-Ratelimit-Remaining-Requests:
+      - '9999'
+      X-Ratelimit-Remaining-Tokens:
+      - '59579'
+      X-Ratelimit-Reset-Requests:
+      - 8.64s
+      X-Ratelimit-Reset-Tokens:
+      - 421ms
+      X-Request-Id:
+      - req_5585e8e921a606e6ff650b185bd50af9
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=KyXMepIPH_DkWI0HlByAgyNFg0LiLphryKrP44161j0-1712947325-1.0.1.1-Xp1q6Yv31R6tOR_H91DXSzza.2NNen_DgNFpYGetiQ_IWnTPv099_aS20TkatHa3NSBOTMjQNOopWTyvShjcBg;
+        path=/; expires=Fri, 12-Apr-24 19:12:05 GMT; domain=.api.openai.com; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=al3HkpS19.N3AhU0yXzSU9vvJjrStn7bzkM3TbjPvnQ-1712947325495-0.0.1.1-604800000;
+        path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 87355a9f884d09ce-MIA
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-9DG8YYiZR7tfZpLP5xtm6hnOMak9J",
+          "object": "chat.completion",
+          "created": 1712947322,
+          "model": "gpt-3.5-turbo-0125",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": null,
+                "tool_calls": [
+                  {
+                    "id": "call_Tw9YOum9ssHUSXOndPSYsAn6",
+                    "type": "function",
+                    "function": {
+                      "name": "Actionitems",
+                      "arguments": "{\"items\":[{\"id\":1,\"name\":\"Improve Authentication System\",\"description\":\"Work on front-end revamp and back-end optimization\",\"priority\":\"High\",\"assignees\":[\"Bob\",\"Carol\"],\"subtasks\":[{\"id\":2,\"name\":\"Front-end Revamp\"},{\"id\":3,\"name\":\"Back-end Optimization\"}]},{\"id\":4,\"name\":\"Integrate Authentication System with New Billing System\",\"description\":\"Integrate authentication system with the new billing system\",\"priority\":\"Medium\",\"assignees\":[\"Bob\"],\"dependencies\":[1]},{\"id\":5,\"name\":\"Update User Documentation\",\"description\":\"Update user documentation to reflect changes\",\"priority\":\"Low\",\"assignees\":[\"Carol\"],\"dependencies\":[2]}]}"
+                    }
+                  }
+                ]
+              },
+              "logprobs": null,
+              "finish_reason": "tool_calls"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 525,
+            "completion_tokens": 147,
+            "total_tokens": 672
+          },
+          "system_fingerprint": "fp_c2295e73ad"
+        }
+  recorded_at: Fri, 12 Apr 2024 18:42:05 GMT
+recorded_with: VCR 6.2.0
