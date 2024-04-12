@@ -35,14 +35,16 @@ Then use Instructor to extract structured data from text in Ruby:
 ```ruby
 require 'instructor'
 
-class UserDetail < Instructor::Model
-  params do
-    required(:name).filled(:string)
-    required(:age).filled(:integer)
+class UserDetail
+  include EasyTalk::Model
+
+  define_schema do
+    property :name, String
+    property :age, Integer
   end
 end
 
-client = Instructor::OpenAI::Client.new
+client = Instructor.patch(OpenAI::Client).new
 
 user = client.chat(
   parameters: {
@@ -53,7 +55,7 @@ user = client.chat(
 )
 
 puts(user.inspect)
-#=> #<Dry::Validation::Result{:name=>"Jason", :age=>25} errors={}>
+{"name"=>"Jason", "age"=>25}
 ```
 
 ## Why use Instructor?
