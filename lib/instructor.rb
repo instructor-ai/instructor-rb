@@ -5,6 +5,7 @@ require 'easy_talk'
 require 'active_support/all'
 require_relative 'instructor/version'
 require_relative 'instructor/openai/patch'
+require_relative 'instructor/openai/response'
 
 module Instructor
   class Error < ::StandardError; end

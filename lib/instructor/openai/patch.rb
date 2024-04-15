@@ -25,7 +25,8 @@ module Instructor
             parameters = parameters.merge(tools: [func])
           end
           response = json_post(path: '/chat/completions', parameters: parameters)
-          function_response = get_parsed_res(response)
+
+          function_response = Response.new(response).parse
           raise Instructor::ValidationError unless valid_json?(function_response, response_model)
 
           function_response
@@ -34,11 +35,6 @@ module Instructor
 
       def valid_json?(json, response_model)
         response_model.validate_json(json)
-      end
-
-      def get_parsed_res(response)
-        str = response.dig('choices', 0, 'message', 'tool_calls', 0, 'function', 'arguments')
-        JSON.parse(str)
       end
 
       def parse_validation_context(parameters, validation_context)
