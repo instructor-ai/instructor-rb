@@ -5,8 +5,8 @@ require_relative 'lib/instructor/version'
 Gem::Specification.new do |spec|
   spec.name = 'instructor-rb'
   spec.version = Instructor::VERSION
-  spec.authors = ['Jason Liu', 'Sergio Bayona']
-  spec.email = ['jason@jxnl.co', 'bayona.sergio@gmail.com']
+  spec.authors = ['Sergio Bayona', 'Jason Liu']
+  spec.email = ['bayona.sergio@gmail.com', 'jason@jxnl.co']
 
   spec.summary = 'Structured extraction in Ruby, powered by llms.'
   spec.description = "Explore the power of structured extraction in Ruby with the Instructor gem. Leveraging OpenAI's function calling API."
