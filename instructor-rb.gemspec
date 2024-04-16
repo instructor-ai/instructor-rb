@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
 
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'activesupport', '~> 6.1.3'
-  spec.add_dependency 'easy_talk', '~> 0.1.1'
+  spec.add_dependency 'activesupport', '~> 7.0'
+  spec.add_dependency 'easy_talk', '~> 0.1.6'
   spec.add_dependency 'ruby-openai', '~> 6'
 end
