@@ -1,43 +1,60 @@
-# frozen_string_literal: true
-
 module Instructor
   module OpenAI
     module Patch
-      def with_retries(max_retries, *exceptions)
-        retries = 0
+      def with_retries(max_retries, exceptions, &block)
+        attempts = 0
         begin
-          yield
-        rescue *exceptions => e
-          puts "Retrying... (#{retries + 1}/#{max_retries})"
-          retries += 1
-          retry if retries < max_retries
-          raise e
+          block.call
+        rescue *exceptions
+          attempts += 1
+          retry if attempts < max_retries
+          raise
         end
       end
 
       def chat(parameters:, response_model: nil, max_retries: 0, validation_context: nil)
-        with_retries(max_retries, JSON::ParserError, Instructor::ValidationError, Faraday::ParsingError) do
-          if response_model.is_a?(Enumerable)
-            parameters = parameters.merge(tools: response_model.map { |model| generate_function(model) })
-          else
-            parameters = parse_validation_context(parameters, validation_context)
-            func = generate_function(response_model)
-            parameters = parameters.merge(tools: [func])
-          end
+        with_retries(max_retries, [JSON::ParserError, Instructor::ValidationError, Faraday::ParsingError]) do
+          model = determine_model(response_model)
+          function = build_function(model)
+          parameters = prepare_parameters(parameters, validation_context, function)
           response = json_post(path: '/chat/completions', parameters: parameters)
-
-          function_response = Response.new(response).parse
-          raise Instructor::ValidationError unless valid_json?(function_response, response_model)
-
-          function_response
+          process_response(response, model)
         end
       end
 
-      def valid_json?(json, response_model)
-        response_model.validate_json(json)
+      def prepare_parameters(parameters, validation_context, function)
+        parameters = apply_validation_context(parameters, validation_context)
+        parameters.merge(tools: [function])
       end
 
-      def parse_validation_context(parameters, validation_context)
+      def process_response(response, model)
+        parsed_response = Response.new(response).parse
+        iterable? ? process_multiple_responses(parsed_response, model) : process_single_response(parsed_response, model)
+      end
+
+      def process_multiple_responses(parsed_response, model)
+        parsed_response.map do |response|
+          instance = model.new(response)
+          instance.valid? ? instance : raise(Instructor::ValidationError)
+        end
+      end
+
+      def process_single_response(parsed_response, model)
+        instance = model.new(parsed_response)
+        instance.valid? ? instance : raise(Instructor::ValidationError)
+      end
+
+      def determine_model(response_model)
+        if response_model.is_a?(T::Types::TypedArray)
+          @iterable = true
+          response_model.type.raw_type
+        else
+          @iterable = false
+          response_model
+        end
+      end
+
+      def apply_validation_context(parameters, validation_context)
         return parameters unless validation_context.is_a?(Hash)
 
         Array[validation_context].each_with_index do |message, index|
@@ -47,7 +64,7 @@ module Instructor
         parameters
       end
 
-      def generate_function(model)
+      def build_function(model)
         {
           type: 'function',
           function: {
@@ -60,6 +77,10 @@ module Instructor
 
       def generate_description(model)
         "Correctly extracted `#{model.name}` with all the required parameters with correct types"
+      end
+
+      def iterable?
+        @iterable
       end
     end
   end

@@ -26,7 +26,11 @@ module Instructor
       end
 
       def parse
-        JSON.parse(function_response.dig('arguments'))
+        if single_response?
+          JSON.parse(function_response.dig('arguments'))
+        else
+          function_responses.map { |res| JSON.parse(res.dig('arguments')) }
+        end
       end
 
       def by_function_name(function_name)

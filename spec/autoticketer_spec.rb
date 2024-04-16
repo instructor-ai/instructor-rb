@@ -86,7 +86,7 @@ RSpec.describe 'Auto-ticketer' do
     DATA
     result = generate(data)
 
-    expect(result).to include_json(
+    expect(result.as_json).to include_json(
       {
         "items": [
           {

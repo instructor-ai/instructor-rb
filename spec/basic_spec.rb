@@ -22,7 +22,7 @@ RSpec.describe 'running an OpenAI function call' do
       response_model: UserDetail
     )
 
-    expect(user['name']).to eq('Jason')
-    expect(user['age']).to eq(25)
+    expect(user.name).to eq('Jason')
+    expect(user.age).to eq(25)
   end
 end

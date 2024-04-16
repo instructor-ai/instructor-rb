@@ -56,8 +56,8 @@ RSpec.describe 'patching the OpenAI client' do
         response_model: user_model
       )
 
-      expect(user['name']).to eq('Jason')
-      expect(user['age']).to eq(25)
+      expect(user.name).to eq('Jason')
+      expect(user.age).to eq(25)
     end
   end
 
@@ -97,8 +97,8 @@ RSpec.describe 'patching the OpenAI client' do
                               text_chunk: 'my name is Jason and I turned 25 years old yesterday' }
       )
 
-      expect(user['name']).to eq('Jason')
-      expect(user['age']).to eq(25)
+      expect(user.name).to eq('Jason')
+      expect(user.age).to eq(25)
     end
   end
 
