@@ -3,7 +3,7 @@ PATH
   specs:
     instructor-rb (0.1.0)
       activesupport (~> 7.0)
-      easy_talk (~> 0.1.6)
+      easy_talk (~> 0.1.7)
       ruby-openai (~> 6)
 
 GEM
@@ -32,7 +32,7 @@ GEM
       rexml
     diff-lcs (1.5.1)
     drb (2.2.1)
-    easy_talk (0.1.6)
+    easy_talk (0.1.7)
       activesupport (~> 7.0)
       json-schema (~> 4)
       sorbet-runtime (~> 0.5)
