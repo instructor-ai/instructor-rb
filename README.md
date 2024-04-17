@@ -17,49 +17,51 @@ Dive into the world of Ruby-based structured extraction, by OpenAI's function ca
 
     - [Python](https://www.github.com/jxnl/instructor)
     - [TS/JS](https://github.com/instructor-ai/instructor-js/)
+    - [Ruby](https://github.com/instructor-ai/instructor-rb)
     - [Elixir](https://github.com/thmsmlr/instructor_ex/)
 
     If you want to port Instructor to another language, please reach out to us on [Twitter](https://twitter.com/jxnlco) we'd love to help you get started!
 
 ## Usage
 
-```rb
-# Todo, change to ruby
-import Instructor from "@instructor-ai/instructor";
-import OpenAI from "openai"
-import { z } from "zod"
+export your OpenAI API key:
 
-const UserSchema = z.object({
-  age: z.number(),
-  name: z.string()
-})
+```bash
+export OPENAI_API_KEY=sk-...
+```
 
-type User = z.infer<typeof UserSchema>
+Then use Instructor to extract structured data from text in Ruby:
 
-const oai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY ?? undefined,
-  organization: process.env.OPENAI_ORG_ID ?? undefined
-})
+```ruby
+require 'instructor'
 
-const client = Instructor({
-  client: oai,
-  mode: "FUNCTIONS" # or "TOOLS" or "MD_JSON" or "JSON"
-})
+class UserDetail
+  include EasyTalk::Model
 
-const user = await client.chat.completions.create({
-  messages: [{ role: "user", content: "Jason Liu is 30 years old" }],
-  model: "gpt-3.5-turbo",
-  response_model: { schema: UserSchema }
-})
+  define_schema do
+    property :name, String
+    property :age, Integer
+  end
+end
 
-console.log(user)
-// { age: 30, name: "Jason Liu" }
+client = Instructor.patch(OpenAI::Client).new
+
+user = client.chat(
+  parameters: {
+    model: 'gpt-3.5-turbo',
+    messages: [{ role: 'user', content: 'Extract Jason is 25 years old' }]
+  },
+  response_model: UserDetail
+)
+
+puts(user.inspect)
+{"name"=>"Jason", "age"=>25}
 ```
 
 ## Why use Instructor?
 
 
-1. **OpenAI Integration** — Active Record integrates seamlessly with OpenAI's API, facilitating efficient data management and manipulation.
+1. **OpenAI Integration** — Integrates seamlessly with OpenAI's API, facilitating efficient data management and manipulation.
 
 2. **Customizable** — It offers significant flexibility. Users can tailor validation processes and define unique error messages.
 
