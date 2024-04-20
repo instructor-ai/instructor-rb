@@ -1,4 +1,5 @@
-# .github/workflows/push_gem.yml
+name: Dev Build
+on: [push]
 jobs:
   push:
     name: Push gem to RubyGems.org
