@@ -34,4 +34,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'activesupport', '~> 7.0'
   spec.add_dependency 'easy_talk', '~> 0.1.7'
   spec.add_dependency 'ruby-openai', '~> 6'
+  spec.add_development_dependency 'rake', '~> 13.1'
 end
