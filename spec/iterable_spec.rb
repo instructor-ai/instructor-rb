@@ -25,7 +25,7 @@ RSpec.describe 'running an OpenAI function with an interable response model' do
       response_model: T::Array[UserDetail]
     )
 
-    for user in users
+    users.each do |user|
       expect(user.valid?).to eq(true)
       expect(user.name).to be_a(String)
       expect(user.age).to be_a(Integer)

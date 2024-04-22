@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Instructor
   module OpenAI
     class Response
@@ -6,7 +8,7 @@ module Instructor
       end
 
       def chat_completions
-        @response.dig('choices')
+        @response['choices']
       end
 
       def tool_calls
@@ -14,7 +16,7 @@ module Instructor
       end
 
       def function_responses
-        tool_calls&.map { |tool_call| tool_call.dig('function') }
+        tool_calls&.map { |tool_call| tool_call['function'] }
       end
 
       def function_response
@@ -27,14 +29,14 @@ module Instructor
 
       def parse
         if single_response?
-          JSON.parse(function_response.dig('arguments'))
+          JSON.parse(function_response['arguments'])
         else
-          function_responses.map { |res| JSON.parse(res.dig('arguments')) }
+          function_responses.map { |res| JSON.parse(res['arguments']) }
         end
       end
 
       def by_function_name(function_name)
-        function_responses&.find { |res| res.dig('name') == function_name }&.dig('arguments')
+        function_responses&.find { |res| res['name'] == function_name }&.dig('arguments')
       end
     end
   end
