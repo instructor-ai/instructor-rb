@@ -5,8 +5,9 @@ _Structured extraction in Ruby, powered by llms, designed for simplicity, transp
 ---
 
 [![Twitter Follow](https://img.shields.io/twitter/follow/jxnlco?style=social)](https://twitter.com/jxnlco)
+[![Twitter Follow](https://img.shields.io/twitter/follow/sbayona?style=social)](https://twitter.com/sbayona)
 [![Documentation](https://img.shields.io/badge/docs-available-brightgreen)](https://jxnl.github.io/instructor-rb)
-[![GitHub issues](https://img.shields.io/github/issues/instructor-ai/instructor-js.svg)](https://github.com/instructor-ai/instructor-rb/issues)
+[![GitHub issues](https://img.shields.io/github/issues/instructor-ai/instructor-rb.svg)](https://github.com/instructor-ai/instructor-rb/issues)
 [![Discord](https://img.shields.io/discord/1192334452110659664?label=discord)](https://discord.gg/CV8sPM5k5Y)
 
 Dive into the world of Ruby-based structured extraction, by OpenAI's function calling API and ActiveRecord, ruby-first schema validation with type inference. Instructor stands out for its simplicity, transparency, and user-centric design. Whether you're a seasoned developer or just starting out, you'll find Instructor's approach intuitive and steerable.
@@ -54,8 +55,11 @@ user = client.chat(
   response_model: UserDetail
 )
 
-user.name # => "Jason"
-user.age # => 25
+user.name
+# => "Jason"
+user.age
+# => 25
+
 ```
 
 ## Why use Instructor?
@@ -63,11 +67,9 @@ user.age # => 25
 
 1. **OpenAI Integration** — Integrates seamlessly with OpenAI's API, facilitating efficient data management and manipulation.
 
-2. **Customizable** — It offers significant flexibility. Users can tailor validation, and express complex relationships between models.
+2. **Customizable** — It offers significant flexibility. Users can tailor validation processes and define unique error messages.
 
-## More Examples
-
-If you'd like to see more check out our [cookbook](examples/index.md).
+3. **Tested and Trusted** — Its reliability is proven by extensive real-world application.
 
 [Installing Instructor](installation.md) is a breeze. 
 
