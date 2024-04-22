@@ -78,7 +78,7 @@ RSpec.describe 'patching the OpenAI client' do
     it 'retries the chat method when parsing fails' do
       expect(client).to receive(:json_post).exactly(max_retries).times
       expect do
-        client.chat(parameters: parameters, response_model: user_model, max_retries: max_retries)
+        client.chat(parameters:, response_model: user_model, max_retries:)
       end.to raise_error(JSON::ParserError)
     end
   end

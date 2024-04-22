@@ -1,0 +1,18 @@
+require:
+  - rubocop-rake
+  - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 3.1
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
+Lint/ConstantDefinitionInBlock:
+  Exclude:
+    - 'spec/**/*'
+
+Layout/LineLength:
+  Exclude:
+    - 'spec/**/*'

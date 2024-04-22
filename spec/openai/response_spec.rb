@@ -3,6 +3,8 @@
 require 'spec_helper'
 
 RSpec.describe Instructor::OpenAI::Response do
+  subject(:response_object) { described_class.new(response) }
+
   let(:response) do
     { 'id' => 'chatcmpl-9DEGpBfHqcS17uJtx1vxpRMEb4DtK',
       'object' => 'chat.completion',
@@ -30,7 +32,6 @@ RSpec.describe Instructor::OpenAI::Response do
       },
       'system_fingerprint' => 'fp_c2295e73ad' }
   end
-  subject(:response_object) { described_class.new(response) }
 
   it 'returns a chat completion' do
     expect(response_object.chat_completions).to eq(response['choices'])

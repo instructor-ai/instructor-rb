@@ -19,7 +19,7 @@ module Instructor
           model = determine_model(response_model)
           function = build_function(model)
           parameters = prepare_parameters(parameters, validation_context, function)
-          response = json_post(path: '/chat/completions', parameters: parameters)
+          response = json_post(path: '/chat/completions', parameters:)
           process_response(response, model)
         end
       end
