@@ -1,65 +1,17 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require_relative '../helpers/autoticketer_models'
 
 RSpec.describe 'Auto-ticketer' do
-  class Subtask
-    include EasyTalk::Model
-
-    define_schema do
-      property :id, Integer, description: 'Unique identifier for the subtask'
-      property :name, String, description: 'Informative title of the subtask'
-    end
+  RSpec.configure do |c|
+    c.include AutoticketerModels
   end
 
-  class Ticket
-    include EasyTalk::Model
+  let(:client) { Instructor.patch(OpenAI::Client).new }
 
-    PRIORITY = %w[low medium high].freeze
-
-    define_schema do
-      property :id, Integer, description: 'Unique identifier for the ticket'
-      property :name, String, description: 'Title of the ticket'
-      property :description, String, description: 'Detailed description of the ticket'
-      property :priority, String, description: 'Priority level'
-      property :assignees, T::Array[String], description: 'List of users assigned to the ticket'
-      property :subtasks, T.nilable(T::Array[Subtask]), description: 'List of subtasks associated with the ticket'
-      property :dependencies, T.nilable(T::Array[Integer]),
-               description: 'List of ticket IDs that this ticket depends on'
-    end
-  end
-
-  class ActionItems
-    include EasyTalk::Model
-
-    define_schema do
-      property :items, T::Array[Ticket]
-    end
-  end
-
-  def generate(data)
-    client = Instructor.patch(OpenAI::Client).new
-
-    client.chat(
-      parameters: {
-        model: 'gpt-3.5-turbo',
-        messages: [
-          {
-            role: 'system',
-            "content": 'The following is a transcript of a meeting between a manager and their team. The manager is assigning tasks to their team members and creating action items for them to complete.'
-          },
-          {
-            "role": 'user',
-            "content": "Create the action items for the following transcript: #{data}"
-          }
-        ]
-      },
-      response_model: ActionItems
-    )
-  end
-
-  it 'generates the proper json-schema', vcr: 'autoticketer/generate' do
-    data = <<~DATA
+  let(:data) do
+    <<~DATA
       Alice: Hey team, we have several critical tasks we need to tackle for the upcoming release. First, we need to work on improving the authentication system. It's a top priority.
 
       Bob: Got it, Alice. I can take the lead on the authentication improvements. Are there any specific areas you want me to focus on?
@@ -84,6 +36,28 @@ RSpec.describe 'Auto-ticketer' do
 
       Alice: Sounds like a plan. Let's get these tasks modeled out and get started.
     DATA
+  end
+
+  def generate(data)
+    client.chat(
+      parameters: {
+        model: 'gpt-3.5-turbo',
+        messages: [
+          {
+            role: 'system',
+            "content": 'The following is a transcript of a meeting between a manager and their team. The manager is assigning tasks to their team members and creating action items for them to complete.'
+          },
+          {
+            "role": 'user',
+            "content": "Create the action items for the following transcript: #{data}"
+          }
+        ]
+      },
+      response_model: AutoticketerModels::ActionItems
+    )
+  end
+
+  it 'generates the proper json-schema', vcr: 'autoticketer/generate' do
     result = generate(data)
 
     expect(result.as_json).to include_json(

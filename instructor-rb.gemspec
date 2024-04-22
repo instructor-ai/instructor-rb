@@ -9,12 +9,12 @@ Gem::Specification.new do |spec|
   spec.email = ['bayona.sergio@gmail.com', 'jason@jxnl.co']
 
   spec.summary = 'Structured extraction in Ruby, powered by llms.'
-  spec.description = "Explore the power of structured extraction in Ruby with the Instructor gem. Leveraging OpenAI's function calling API."
+  spec.description = 'Explore the power of LLM structured extraction in Ruby with the Instructor gem.'
   spec.homepage = 'https://github.com/instructor-ai/instructor-rb'
   spec.license = 'MIT'
-  spec.required_ruby_version = '>= 2.7.0'
+  spec.required_ruby_version = '>= 3.1.0'
 
-  spec.metadata['allowed_push_host'] = 'https://rubygems.pkg.github.com/instructor-ai'
+  spec.metadata['allowed_push_host'] = 'https://rubygems.pkg.github.com'
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = 'https://github.com/instructor-ai/instructor-rb'
@@ -34,4 +34,13 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'activesupport', '~> 7.0'
   spec.add_dependency 'easy_talk', '~> 0.1.7'
   spec.add_dependency 'ruby-openai', '~> 6'
+  spec.add_development_dependency 'pry-byebug', '~> 3.10'
+  spec.add_development_dependency 'rake', '~> 13.1'
+  spec.add_development_dependency 'rspec', '~> 3.0'
+  spec.add_development_dependency 'rspec-json_expectations', '~> 2.0'
+  spec.add_development_dependency 'rubocop', '~> 1.21'
+  spec.add_development_dependency 'rubocop-rake', '~> 0.6'
+  spec.add_development_dependency 'rubocop-rspec', '~> 2.29'
+  spec.add_development_dependency 'vcr', '~> 6.0'
+  spec.add_development_dependency 'webmock', '~> 3.13'
 end
