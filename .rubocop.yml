@@ -1,0 +1,38 @@
+require:
+  - rubocop-rake
+  - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 3.1
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
+Lint/ConstantDefinitionInBlock:
+  Exclude:
+    - 'spec/**/*'
+
+Layout/LineLength:
+  Exclude:
+    - 'spec/**/*'
+
+RSpec/FilePath:
+  SpecSuffixOnly: true
+
+RSpec/MultipleExpectations:
+  Max: 4
+
+RSpec/ExampleLength:
+  Max: 10
+  Exclude:
+    - spec/examples/*
+
+RSpec/DescribeClass:
+  Exclude:
+    - spec/examples/*
+    - spec/features/*
+
+RSpec/MethodLength:
+  Exclude:
+    - spec/examples/*
