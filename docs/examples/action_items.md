@@ -1,6 +1,6 @@
 # Example: Extracting Action Items from Meeting Transcripts
 
-In this guide, we'll walk through how to extract action items from meeting transcripts using OpenAI's API. This use case is essential for automating project management tasks, such as task assignment and priority setting.
+In this guide, we'll walk through how to extract action items from meeting transcripts using OpenAI's API. This use case is a good example for automating project management tasks, such as task assignment and priority setting.
 
 !!! tips "Motivation"
 
@@ -10,105 +10,103 @@ In this guide, we'll walk through how to extract action items from meeting trans
 
 We'll model a meeting transcript as a collection of **`Ticket`** objects, each representing an action item. Every **`Ticket`** can have multiple **`Subtask`** objects, representing smaller, manageable pieces of the main task.
 
-```ts
-import Instructor from "@/instructor"
-import OpenAI from "openai"
-import { z } from "zod"
+```Ruby
+  class Subtask
+    include EasyTalk::Model
 
-const PrioritySchema = z.enum(["HIGH", "MEDIUM", "LOW"]);
+    define_schema do
+      property :id, Integer, description: 'Unique identifier for the subtask'
+      property :name, String, description: 'Informative title of the subtask'
+    end
+  end
 
-const SubtaskSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-})
+  class Ticket
+    include EasyTalk::Model
 
-const TicketSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  description: z.string(),
-  priority: PrioritySchema,
-  assignees: z.array(z.string()),
-  subtasks: z.array(SubtaskSchema).optional(),
-  dependencies: z.array(z.number()).optional()
-})
+    PRIORITY = %w[low medium high].freeze
 
-const ActionItemsSchema = z.object({
-  items: z.array(TicketSchema)
-})
+    define_schema do
+      property :id, Integer, description: 'Unique identifier for the ticket'
+      property :name, String, description: 'Title of the ticket'
+      property :description, String, description: 'Detailed description of the ticket'
+      property :priority, String, description: 'Priority level'
+      property :assignees, T::Array[String], description: 'List of users assigned to the ticket'
+      property :subtasks, T.nilable(T::Array[Subtask]), description: 'List of subtasks associated with the ticket'
+      property :dependencies, T.nilable(T::Array[Integer]),
+               description: 'List of ticket IDs that this ticket depends on'
+    end
+  end
 
-type ActionItems = z.infer<typeof ActionItemsSchema>
+  class ActionItems
+    include EasyTalk::Model
+
+    define_schema do
+      property :items, T::Array[Ticket]
+    end
+  end
 ```
 
 ## Extracting Action Items
 
-To extract action items from a meeting transcript, we use the **`extractActionItems`** function. It calls OpenAI's API, processes the text, and returns a set of action items modeled as **`ActionItems`**.
+To extract action items from a meeting transcript, we use the **`extract_action_items()`** method. It calls OpenAI's API, processes the text, and returns a set of action items modeled as **`ActionItems`**.
 
-```ts
-const oai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY ?? undefined,
-  organization: process.env.OPENAI_ORG_ID ?? undefined
-})
+```Ruby
 
-const client = Instructor({
-  client: oai,
-  mode: "FUNCTIONS",
-})
+  def extract_action_items(data)
+    client = Instructor.patch(OpenAI::Client).new
 
-const extractActionItems = async (data: string): Promise<ActionItems | undefined> => {
-  const actionItems: ActionItems = await client.chat.completions.create({
-    messages: [
-      {
-        "role": "system",
-        "content": "The following is a transcript of a meeting...",
+    client.chat(
+      parameters: {
+        model: 'gpt-3.5-turbo',
+        messages: [
+          {
+            role: 'system',
+            "content": 'The following is a transcript of a meeting between a manager and their team. The manager is assigning tasks to their team members and creating action items for them to complete.'
+          },
+          {
+            "role": 'user',
+            "content": "Create the action items for the following transcript: #{data}"
+          }
+        ]
       },
-      {
-        "role": "user",
-        "content": `Create the action items for the following transcript: ${data}`,
-      },
-    ],
-    model: "gpt-4-turbo",
-    response_model: { schema: ActionItemsSchema },
-    max_tokens: 1000,
-    temperature: 0.0,
-    max_retries: 2,
-  })
-
-  return actionItems || undefined
-}
+      response_model: ActionItems
+    )
+  end
 ```
 
 ## Evaluation and Testing
 
-To test the **`extractActionItems`** function, we provide it with a sample transcript, and then print the JSON representation of the extracted action items.
+To test the **`extract_action_items`** method, we provide it with a sample transcript, and then print the JSON representation of the extracted action items.
 
-```ts
-const actionItems = await extractActionItems(
-`Alice: Hey team, we have several critical tasks we need to tackle for the upcoming release. First, we need to work on improving the authentication system. It's a top priority.
+```Ruby
+   data = <<~DATA
+      Alice: Hey team, we have several critical tasks we need to tackle for the upcoming release. First, we need to work on improving the authentication system. It's a top priority.
 
-Bob: Got it, Alice. I can take the lead on the authentication improvements. Are there any specific areas you want me to focus on?
+      Bob: Got it, Alice. I can take the lead on the authentication improvements. Are there any specific areas you want me to focus on?
 
-Alice: Good question, Bob. We need both a front-end revamp and back-end optimization. So basically, two sub-tasks.
+      Alice: Good question, Bob. We need both a front-end revamp and back-end optimization. So basically, two sub-tasks.
 
-Carol: I can help with the front-end part of the authentication system.
+      Carol: I can help with the front-end part of the authentication system.
 
-Bob: Great, Carol. I'll handle the back-end optimization then.
+      Bob: Great, Carol. I'll handle the back-end optimization then.
 
-Alice: Perfect. Now, after the authentication system is improved, we have to integrate it with our new billing system. That's a medium priority task.
+      Alice: Perfect. Now, after the authentication system is improved, we have to integrate it with our new billing system. That's a medium priority task.
 
-Carol: Is the new billing system already in place?
+      Carol: Is the new billing system already in place?
 
-Alice: No, it's actually another task. So it's a dependency for the integration task. Bob, can you also handle the billing system?
+      Alice: No, it's actually another task. So it's a dependency for the integration task. Bob, can you also handle the billing system?
 
-Bob: Sure, but I'll need to complete the back-end optimization of the authentication system first, so it's dependent on that.
+      Bob: Sure, but I'll need to complete the back-end optimization of the authentication system first, so it's dependent on that.
 
-Alice: Understood. Lastly, we also need to update our user documentation to reflect all these changes. It's a low-priority task but still important.
+      Alice: Understood. Lastly, we also need to update our user documentation to reflect all these changes. It's a low-priority task but still important.
 
-Carol: I can take that on once the front-end changes for the authentication system are done. So, it would be dependent on that.
+      Carol: I can take that on once the front-end changes for the authentication system are done. So, it would be dependent on that.
 
-Alice: Sounds like a plan. Let's get these tasks modeled out and get started.`
-)
+      Alice: Sounds like a plan. Let's get these tasks modeled out and get started.
+    DATA
 
-console.log({ actionItems: JSON.stringify(actionItems) })
+    result = generate(data)
+    puts(result.as_json)
 ```
 
 ## Visualizing the tasks
@@ -160,6 +158,6 @@ In order to quickly visualize the data we used code interpreter to create a grap
 }
 ```
 
-In this example, the **`extractActionItems`** function successfully identifies and segments the action items, assigning them priorities, assignees, subtasks, and dependencies as discussed in the meeting.
+In this example, the **`extract_action_items`** method successfully identifies and segments the action items, assigning them priorities, assignees, subtasks, and dependencies as discussed in the meeting.
 
 By automating this process, you can ensure that important tasks and details are not lost in the sea of meeting minutes, making project management more efficient and effective.
