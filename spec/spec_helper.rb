@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'instructor'
-require 'pry'
+require 'pry-byebug'
 require 'vcr'
 require 'rspec/json_expectations'
 

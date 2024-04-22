@@ -9,12 +9,12 @@ Gem::Specification.new do |spec|
   spec.email = ['bayona.sergio@gmail.com', 'jason@jxnl.co']
 
   spec.summary = 'Structured extraction in Ruby, powered by llms.'
-  spec.description = "Explore the power of structured extraction in Ruby with the Instructor gem. Leveraging OpenAI's function calling API."
+  spec.description = 'Explore the power of LLM structured extraction in Ruby with the Instructor gem.'
   spec.homepage = 'https://github.com/instructor-ai/instructor-rb'
   spec.license = 'MIT'
   spec.required_ruby_version = '>= 3.1.0'
 
-  spec.metadata['allowed_push_host'] = 'https://rubygems.pkg.github.com/instructor-ai'
+  spec.metadata['allowed_push_host'] = 'https://rubygems.pkg.github.com'
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = 'https://github.com/instructor-ai/instructor-rb'
