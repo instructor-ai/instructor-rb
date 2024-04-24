@@ -9,7 +9,7 @@ If you need help getting started with Instructor or with advanced usage, the fol
 
 ## :fontawesome-brands-discord: Discord
 
-The [Discord](https://discord.gg/CV8sPM5k5Y) is the best place to get help. You can ask questions, get help with debugging, and discuss Instructor with other users.
+The [Discord](https://discord.gg/DWHZdqpNgz) is the best place to get help. You can ask questions, get help with debugging, and discuss Instructor with other users.
 
 ## :material-creation: Concepts
 
@@ -21,11 +21,11 @@ The [cookbooks](examples/index.md) are a great place to start. They contain a va
 
 ## :material-github: GitHub Discussions
 
-[GitHub discussions](https://github.com/instructor-ai/instructor-js/discussions) are useful for asking questions, your question and the answer will help everyone.
+[GitHub discussions](https://github.com/instructor-ai/instructor-rb/discussions) are useful for asking questions, your question and the answer will help everyone.
 
 ## :material-github: GitHub Issues
 
-[GitHub issues](https://github.com/instructor-ai/instructor-js/issues) are useful for reporting bugs or requesting new features.
+[GitHub issues](https://github.com/instructor-ai/instructor-rb/issues) are useful for reporting bugs or requesting new features.
 
 ## :material-twitter: Twitter
 
