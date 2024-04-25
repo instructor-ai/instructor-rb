@@ -54,8 +54,8 @@ user = client.chat(
   response_model: UserDetail
 )
 
-puts(user.inspect)
-{"name"=>"Jason", "age"=>25}
+user.name # => "Jason"
+user.age # => 25
 ```
 
 ## Why use Instructor?
@@ -63,11 +63,7 @@ puts(user.inspect)
 
 1. **OpenAI Integration** — Integrates seamlessly with OpenAI's API, facilitating efficient data management and manipulation.
 
-2. **Customizable** — It offers significant flexibility. Users can tailor validation processes and define unique error messages.
-
-3. **Widespread Adoption** — As a primary component in Ruby on Rails, it's widely used and backed by a substantial community.
-
-4. **Tested and Trusted** — Its reliability is proven by extensive real-world application, underscored by its high adoption rate in Ruby-based projects.
+2. **Customizable** — It offers significant flexibility. Users can tailor validation, and express complex relationships between models.
 
 ## More Examples
 
