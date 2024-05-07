@@ -1,6 +1,6 @@
-# instructor-js
+# instructor-rb
 
-_Structured extraction in Typescript, powered by llms, designed for simplicity, transparency, and control._
+_Structured extraction in Ruby, powered by llms, designed for simplicity, transparency, and control._
 
 ---
 
