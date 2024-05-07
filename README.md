@@ -9,18 +9,29 @@ _Structured extraction in Ruby, powered by llms, designed for simplicity, transp
 [![GitHub issues](https://img.shields.io/github/issues/instructor-ai/instructor-js.svg)](https://github.com/instructor-ai/instructor-rb/issues)
 [![Discord](https://img.shields.io/discord/1192334452110659664?label=discord)](https://discord.gg/CV8sPM5k5Y)
 
-Dive into the world of Ruby-based structured extraction, by OpenAI's function calling API and ActiveRecord, ruby-first schema validation with type inference. Instructor stands out for its simplicity, transparency, and user-centric design. Whether you're a seasoned developer or just starting out, you'll find Instructor's approach intuitive and steerable.
+Dive into the world of Ruby-based structured extraction, by OpenAI's function calling API, ruby-first schema validation with type inference. Instructor stands out for its simplicity, transparency, and user-centric design. Whether you're a seasoned developer or just starting out, you'll find Instructor's approach intuitive and steerable.
 
-> ℹ️ **Tip:**  Support in other languages
+Instructor-rb is a Ruby library that makes it a breeze to work with structured outputs from large language models (LLMs). Built on top of [EasyTalk](https://github.com/sergiobayona/easy_talk), it provides a simple, transparent, and user-friendly API to manage validation, retries, and streaming responses. Get ready to supercharge your LLM workflows!
 
-    Check out ports to other languages below:
+# Getting Started
 
-    - [Python](https://www.github.com/jxnl/instructor)
-    - [TS/JS](https://github.com/instructor-ai/instructor-js/)
-    - [Ruby](https://github.com/instructor-ai/instructor-rb)
-    - [Elixir](https://github.com/thmsmlr/instructor_ex/)
+  1. Install Instructor-rb at the command prompt if you haven't yet:
+  
+        ```bash
+        $ gem install instructor-rb
+        ```
 
-    If you want to port Instructor to another language, please reach out to us on [Twitter](https://twitter.com/jxnlco) we'd love to help you get started!
+  2. In your Ruby project, require the gem:
+
+        ```ruby
+        require 'instructor'
+        ```
+
+  3. At the beginning of your script, initialize and patch the OpenAI client:
+
+        ```ruby
+        client = Instructor.patch(OpenAI::Client)
+        ```
 
 ## Usage
 
@@ -30,7 +41,7 @@ export your OpenAI API key:
 export OPENAI_API_KEY=sk-...
 ```
 
-Then use Instructor to extract structured data from text in Ruby:
+Then use Instructor by defining your schema in Ruby using the `define_schema` block and [EasyTalk](https://github.com/sergiobayona/easy_talk)'s schema definition syntax. Here's an example in:
 
 ```ruby
 require 'instructor'
@@ -57,6 +68,18 @@ user = client.chat(
 user.name # => "Jason"
 user.age # => 25
 ```
+
+  
+> ℹ️ **Tip:**  Support in other languages
+
+    Check out ports to other languages below:
+
+    - [Python](https://www.github.com/jxnl/instructor)
+    - [TS/JS](https://github.com/instructor-ai/instructor-js/)
+    - [Ruby](https://github.com/instructor-ai/instructor-rb)
+    - [Elixir](https://github.com/thmsmlr/instructor_ex/)
+
+    If you want to port Instructor to another language, please reach out to us on [Twitter](https://twitter.com/jxnlco) we'd love to help you get started!
 
 ## Why use Instructor?
 
