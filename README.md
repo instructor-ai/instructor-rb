@@ -9,8 +9,6 @@ _Structured extraction in Ruby, powered by llms, designed for simplicity, transp
 [![GitHub issues](https://img.shields.io/github/issues/instructor-ai/instructor-js.svg)](https://github.com/instructor-ai/instructor-rb/issues)
 [![Discord](https://img.shields.io/discord/1192334452110659664?label=discord)](https://discord.gg/CV8sPM5k5Y)
 
-Dive into the world of Ruby-based structured extraction, by OpenAI's function calling API, ruby-first schema validation with type inference. Instructor stands out for its simplicity, transparency, and user-centric design. Whether you're a seasoned developer or just starting out, you'll find Instructor's approach intuitive and steerable.
-
 Instructor-rb is a Ruby library that makes it a breeze to work with structured outputs from large language models (LLMs). Built on top of [EasyTalk](https://github.com/sergiobayona/easy_talk), it provides a simple, transparent, and user-friendly API to manage validation, retries, and streaming responses. Get ready to supercharge your LLM workflows!
 
 # Getting Started
