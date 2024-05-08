@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'openai'
+require 'anthropic'
 require 'easy_talk'
 require 'active_support/all'
 require_relative 'instructor/version'

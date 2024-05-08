@@ -1,0 +1,75 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-opus-20240229","messages":[{"role":"user","content":"Extract
+        Jason is 25 years old"}],"max_tokens":1024,"tools":[{"name":"Invalidmodel","description":"Correctly
+        extracted `InvalidModel` with all the required parameters with correct types","input_schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"string"}},"required":["name","age"]}}]}'
+    headers:
+      Content-Type:
+      - application/json
+      X-Api-Key:
+      - <ANTHROPIC_KEY_PLACEHOLDER>
+      Anthropic-Version:
+      - '2023-06-01'
+      Anthropic-Beta:
+      - tools-2024-04-04
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 09 May 2024 20:20:11 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Requests-Limit:
+      - '5'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '4'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2024-05-09T20:21:30Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '9000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2024-05-09T20:21:30Z'
+      Request-Id:
+      - req_015hdwz7zx57NRsSTpN2HTV9
+      X-Cloud-Trace-Context:
+      - 0bd4780909a278c548f8cc6bf3bb8178
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 881463470a0c8dd8-MIA
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_01EKfajCRuz7bheKbQE5Dkqr","type":"message","role":"assistant","model":"claude-3-opus-20240229","stop_sequence":null,"usage":{"input_tokens":489,"output_tokens":206},"content":[{"type":"text","text":"<thinking>\nThe
+        key parts of the request are:\n- Extract information from text\n- The text
+        contains a name \"Jason\" and age \"25 years old\"\n\nThe Invalidmodel tool
+        looks relevant because it can extract a name and age. Let''s check if the
+        required parameters are provided:\n- name: The text contains the name \"Jason\",
+        so this can be provided \n- age: The text specifies Jason is \"25 years old\",
+        so the age can be provided as \"25 years old\"\n\nAll the required parameters
+        are present in the input text, so we can proceed with calling the tool.\n</thinking>"},{"type":"tool_use","id":"toolu_01B6t1vi4tF9qEAx6RMH1sPU","name":"Invalidmodel","input":{"name":"Jason","age":"25
+        years old"}}],"stop_reason":"tool_use"}'
+  recorded_at: Thu, 09 May 2024 20:20:11 GMT
+recorded_with: VCR 6.2.0

@@ -18,7 +18,7 @@ RSpec.describe 'running an OpenAI function call' do
     end
   end
 
-  let(:client) { Instructor.patch(OpenAI::Client).new }
+  let(:client) { Instructor.from_openai(OpenAI::Client).new }
 
   let(:parameters) do
     {

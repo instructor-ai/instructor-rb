@@ -29,7 +29,7 @@ Instructor-rb is a Ruby library that makes it a breeze to work with structured o
   3. At the beginning of your script, initialize and patch the OpenAI client:
 
         ```ruby
-        client = Instructor.patch(OpenAI::Client)
+        client = Instructor.from_openai(OpenAI::Client)
         ```
 
 ## Usage
@@ -54,7 +54,7 @@ class UserDetail
   end
 end
 
-client = Instructor.patch(OpenAI::Client).new
+client = Instructor.from_openai(OpenAI::Client).new
 
 user = client.chat(
   parameters: {

@@ -1,0 +1,75 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-opus-20240229","messages":[{"role":"user","content":"Answer
+        the question: What is your name and age? with the text chunk: my name is Jason
+        and I turned 25 years old yesterday"}],"max_tokens":1024,"tools":[{"name":"User","description":"Correctly
+        extracted `User` with all the required parameters with correct types","input_schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"]}}]}'
+    headers:
+      Content-Type:
+      - application/json
+      X-Api-Key:
+      - <ANTHROPIC_KEY_PLACEHOLDER>
+      Anthropic-Version:
+      - '2023-06-01'
+      Anthropic-Beta:
+      - tools-2024-04-04
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 09 May 2024 20:17:49 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Requests-Limit:
+      - '5'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '4'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2024-05-09T20:18:30Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '9000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2024-05-09T20:18:30Z'
+      Request-Id:
+      - req_01X62QzcyrjKKb1pHKVrvFj8
+      X-Cloud-Trace-Context:
+      - dba7eed0f154afe4bd161be4c4f86725
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 88145fda2ef03716-MIA
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_01NSQ3xhUyjHFLhFd6TMVx42","type":"message","role":"assistant","model":"claude-3-opus-20240229","stop_sequence":null,"usage":{"input_tokens":507,"output_tokens":180},"content":[{"type":"text","text":"<thinking>\nThe
+        relevant tool to use here is the User function, since the question is asking
+        for a name and age, which matches the parameters of that function.\n\nAnalyzing
+        the provided text for the required parameters:\nname: The text says \"my name
+        is Jason\", so the name is provided and is \"Jason\"\nage: The text says \"I
+        turned 25 years old yesterday\". So the age is provided and is 25.\n\nSince
+        both required parameters are provided, I can proceed with calling the User
+        function.\n</thinking>"},{"type":"tool_use","id":"toolu_01V2yurTTibtau42B4QHBuCJ","name":"User","input":{"name":"Jason","age":25}}],"stop_reason":"tool_use"}'
+  recorded_at: Thu, 09 May 2024 20:17:49 GMT
+recorded_with: VCR 6.2.0

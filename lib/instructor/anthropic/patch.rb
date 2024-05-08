@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
+require 'anthropic'
+
 # The Instructor module provides functionality for interacting with OpenAI's chat API.
 module Instructor
-  module OpenAI
+  module Anthropic
     # The `Patch` module provides methods for patching and modifying the OpenAI client behavior.
     module Patch
       # Executes a block of code with retries in case of specific exceptions.
@@ -21,21 +23,20 @@ module Instructor
         end
       end
 
-      # Sends a chat request to the API and processes the response.
+      # Sends a message request to the API and processes the response.
       #
       # @param parameters [Hash] The parameters for the chat request as expected by the OpenAI client.
       # @param response_model [Class] The response model class.
       # @param max_retries [Integer] The maximum number of retries. Default is 0.
       # @param validation_context [Hash] The validation context for the parameters. Optional.
       # @return [Object] The processed response.
-      def chat(parameters:, response_model: nil, max_retries: 0, validation_context: nil)
-        return json_post(path: '/chat/completions', parameters:) if response_model.nil?
-
+      def messages(parameters:, response_model: nil, max_retries: 0, validation_context: nil)
         with_retries(max_retries, [JSON::ParserError, Instructor::ValidationError, Faraday::ParsingError]) do
           model = determine_model(response_model)
           function = build_function(model)
           parameters = prepare_parameters(parameters, validation_context, function)
-          response = json_post(path: '/chat/completions', parameters: parameters)
+          ::Anthropic.configuration.extra_headers = { 'anthropic-beta' => 'tools-2024-04-04' }
+          response = ::Anthropic::Client.json_post(path: '/messages', parameters:)
           process_response(response, model)
         end
       end
@@ -47,23 +48,10 @@ module Instructor
       # @param function [Hash] The function details.
       # @return [Hash] The prepared parameters.
       def prepare_parameters(parameters, validation_context, function)
+        # parameters # fetch the parameters's max_token or set it to 1024
+        parameters[:max_tokens] = 1024 unless parameters.key?(:max_tokens)
         parameters = apply_validation_context(parameters, validation_context)
-        parameters.merge!(tools: [function])
-        tool_choice = resolve_tool_choice(function)
-        parameters.merge!(tool_choice:)
-      end
-
-      def resolve_tool_choice(function)
-        case Instructor.mode
-        when Instructor::Mode::TOOLS.function
-          { type: 'function', function: { name: function[:function][:name] } }
-        when Instructor::Mode::TOOLS.auto
-          'auto'
-        when Instructor::Mode::TOOLS.required
-          'required'
-        when Instructor::Mode::TOOLS.none
-          'none'
-        end
+        parameters.merge(tools: [function])
       end
 
       # Processes the API response.
@@ -73,11 +61,7 @@ module Instructor
       # @return [Object] The processed response.
       def process_response(response, model)
         parsed_response = Response.new(response).parse
-        if iterable?(parsed_response)
-          process_multiple_responses(parsed_response, model)
-        else
-          process_single_response(parsed_response, model)
-        end
+        iterable? ? process_multiple_responses(parsed_response, model) : process_single_response(parsed_response, model)
       end
 
       # Processes multiple responses from the API.
@@ -105,7 +89,7 @@ module Instructor
       # Determines the response model based on the provided value.
       #
       # @param response_model [Class] The response model class or typed array.
-      # @return [Class] The response model.
+      # @return [Class] The determined response model class.
       def determine_model(response_model)
         if response_model.is_a?(T::Types::TypedArray)
           @iterable = true
@@ -137,17 +121,10 @@ module Instructor
       # @return [Hash] The function details.
       def build_function(model)
         {
-          type: 'function',
-          function: {
-            name: generate_function_name(model),
-            description: generate_description(model),
-            parameters: model.json_schema
-          }
+          name: model.name.humanize.titleize,
+          description: generate_description(model),
+          input_schema: model.json_schema
         }
-      end
-
-      def generate_function_name(model)
-        model.schema.fetch(:title, model.name)
       end
 
       # Generates the description for the function.
@@ -155,20 +132,14 @@ module Instructor
       # @param model [Class] The response model class.
       # @return [String] The generated description.
       def generate_description(model)
-        if model.respond_to?(:instructions)
-          raise Instructor::Error, 'The instructions must be a string' unless model.instructions.is_a?(String)
-
-          model.instructions
-        else
-          "Correctly extracted `#{model.name}` with all the required parameters with correct types"
-        end
+        "Correctly extracted `#{model.name}` with all the required parameters with correct types"
       end
 
       # Checks if the response is iterable.
       #
       # @return [Boolean] `true` if the response is iterable, `false` otherwise.
-      def iterable?(response)
-        @iterable && response.is_a?(Array)
+      def iterable?
+        @iterable
       end
     end
   end

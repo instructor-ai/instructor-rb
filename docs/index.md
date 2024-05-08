@@ -44,7 +44,7 @@ class UserDetail
   end
 end
   
-client = Instructor.patch(OpenAI::Client).new
+client = Instructor.from_openai(OpenAI::Client).new
 
 user = client.chat(
 parameters: {
