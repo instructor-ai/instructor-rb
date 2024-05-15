@@ -1,0 +1,109 @@
+module Instructor
+  module Base
+    module Patch
+      # Executes a block of code with retries in case of specific exceptions.
+      #
+      # @param max_retries [Integer] The maximum number of retries.
+      # @param exceptions [Array<Class>] The exceptions to catch and retry.
+      # @yield The block of code to execute.
+      def with_retries(max_retries, exceptions, &block)
+        attempts = 0
+        begin
+          block.call
+        rescue *exceptions
+          attempts += 1
+          retry if attempts < max_retries
+          raise
+        end
+      end
+
+      # Prepares the parameters for the chat request.
+      #
+      # @param parameters [Hash] The original parameters.
+      # @param validation_context [Hash] The validation context for the parameters.
+      # @param function [Hash] The function details.
+      # @return [Hash] The prepared parameters.
+      def prepare_parameters(parameters, validation_context, function)
+        # parameters # fetch the parameters's max_token or set it to 1024
+        parameters = apply_validation_context(parameters, validation_context)
+        parameters.merge(tools: [function])
+      end
+
+      # Processes the API response.
+      #
+      # @param response [Hash] The API response.
+      # @param model [Class] The response model class.
+      # @return [Object] The processed response.
+      def process_response(response, model)
+        parsed_response = Response.new(response).parse
+        iterable? ? process_multiple_responses(parsed_response, model) : process_single_response(parsed_response, model)
+      end
+
+      # Processes multiple responses from the API.
+      #
+      # @param parsed_response [Array<Hash>] The parsed API responses.
+      # @param model [Class] The response model class.
+      # @return [Array<Object>] The processed responses.
+      def process_multiple_responses(parsed_response, model)
+        parsed_response.map do |response|
+          instance = model.new(response)
+          instance.valid? ? instance : raise(Instructor::ValidationError)
+        end
+      end
+
+      # Processes a single response from the API.
+      #
+      # @param parsed_response [Hash] The parsed API response.
+      # @param model [Class] The response model class.
+      # @return [Object] The processed response.
+      def process_single_response(parsed_response, model)
+        instance = model.new(parsed_response)
+        instance.valid? ? instance : raise(Instructor::ValidationError)
+      end
+
+      # Determines the response model based on the provided value.
+      #
+      # @param response_model [Class] The response model class or typed array.
+      # @return [Class] The determined response model class.
+      def determine_model(response_model)
+        if response_model.is_a?(T::Types::TypedArray)
+          @iterable = true
+          response_model.type.raw_type
+        else
+          @iterable = false
+          response_model
+        end
+      end
+
+      # Applies the validation context to the parameters.
+      #
+      # @param parameters [Hash] The original parameters.
+      # @param validation_context [Hash] The validation context.
+      # @return [Hash] The parameters with applied validation context.
+      def apply_validation_context(parameters, validation_context)
+        return parameters unless validation_context.is_a?(Hash)
+
+        Array[validation_context].each_with_index do |message, index|
+          parameters[:messages][index][:content] = parameters[:messages][index][:content] % message
+        end
+
+        parameters
+      end
+
+      # Generates the description for the function.
+      #
+      # @param model [Class] The response model class.
+      # @return [String] The generated description.
+      def generate_description(model)
+        "Correctly extracted `#{model.name}` with all the required parameters with correct types"
+      end
+
+      # Checks if the response is iterable.
+      #
+      # @return [Boolean] `true` if the response is iterable, `false` otherwise.
+      def iterable?
+        @iterable
+      end
+    end
+  end
+end
