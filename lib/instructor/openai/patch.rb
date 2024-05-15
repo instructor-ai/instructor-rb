@@ -118,11 +118,15 @@ module Instructor
         {
           type: 'function',
           function: {
-            name: model.name.humanize.titleize,
+            name: generate_function_name(model),
             description: generate_description(model),
             parameters: model.json_schema
           }
         }
+      end
+
+      def generate_function_name(model)
+        model.schema.fetch(:title, model.name)
       end
 
       # Generates the description for the function.
@@ -130,7 +134,13 @@ module Instructor
       # @param model [Class] The response model class.
       # @return [String] The generated description.
       def generate_description(model)
-        "Correctly extracted `#{model.name}` with all the required parameters with correct types"
+        if model.respond_to?(:instructions)
+          raise Instructor::Error, 'The instructions must be a string' unless model.instructions.is_a?(String)
+
+          model.instructions
+        else
+          "Correctly extracted `#{model.name}` with all the required parameters with correct types"
+        end
       end
 
       # Checks if the response is iterable.

@@ -13,7 +13,12 @@ RSpec.describe Instructor::OpenAI::Patch do
         'User'
       end
 
+      def self.instructions
+        "Extract the user's name and age."
+      end
+
       define_schema do
+        title 'SomeUser'
         property :name, String
         property :age, Integer
       end
@@ -24,25 +29,67 @@ RSpec.describe Instructor::OpenAI::Patch do
     expect(patched_client).to eq(OpenAI::Client)
   end
 
+  context 'when generating description' do
+    let(:client) { patched_client.new }
+
+    it "returns the model's instructions" do
+      expect(client.generate_description(user_model)).to eq("Extract the user's name and age.")
+    end
+
+    it 'returns the default description when the model does not have instructions' do
+      model = Class.new do
+        include EasyTalk::Model
+
+        def self.name
+          'User'
+        end
+
+        define_schema {}
+      end
+
+      expect(client.generate_description(model)).to eq('Correctly extracted `User` with all the required parameters with correct types')
+    end
+  end
+
   context 'with a new instance of the patched client' do
     it 'returns an instance of the patched client' do
       expect(patched_client.new).to be_an_instance_of(OpenAI::Client)
     end
 
     pending 'receives the chat method with the expected arguments' do
-      client = patched_client.new
       client.chat(parameters: {}, response_model: nil)
       expect(client).to have_received(:chat).with(parameters: {}, response_model: nil)
     end
 
     it 'does not require the response model argument' do
-      client = patched_client.new
       expect { client.chat(parameters: {}) }.not_to raise_error(ArgumentError)
     end
 
     it 'does require the parameters argument' do
       client = patched_client.new
       expect { client.chat }.to raise_error(ArgumentError, 'missing keyword: :parameters')
+    end
+
+    describe 'when setting the function_name' do
+      it 'returns the function_name based on the schema title' do
+        client = patched_client.new
+        expect(client.generate_function_name(user_model)).to eq('SomeUser')
+      end
+
+      it 'returns the class name when the schema title is not defined' do
+        model = Class.new do
+          include EasyTalk::Model
+
+          def self.name
+            'User'
+          end
+
+          define_schema {}
+        end
+
+        client = patched_client.new
+        expect(client.generate_function_name(model)).to eq('User')
+      end
     end
 
     it 'returns an object with the expected valid attribute values', vcr: 'patching_spec/valid_response' do
