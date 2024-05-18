@@ -46,7 +46,22 @@ module Instructor
       # @return [Hash] The prepared parameters.
       def prepare_parameters(parameters, validation_context, function)
         parameters = apply_validation_context(parameters, validation_context)
-        parameters.merge(tools: [function])
+        parameters.merge!(tools: [function])
+        tool_choice = resolve_tool_choice(function)
+        parameters.merge!(tool_choice:)
+      end
+
+      def resolve_tool_choice(function)
+        case Instructor.mode
+        when Instructor::Mode::TOOLS.function
+          { type: 'function', function: { name: function[:function][:name] } }
+        when Instructor::Mode::TOOLS.auto
+          'auto'
+        when Instructor::Mode::TOOLS.required
+          'required'
+        when Instructor::Mode::TOOLS.none
+          'none'
+        end
       end
 
       # Processes the API response.
@@ -56,7 +71,11 @@ module Instructor
       # @return [Object] The processed response.
       def process_response(response, model)
         parsed_response = Response.new(response).parse
-        iterable? ? process_multiple_responses(parsed_response, model) : process_single_response(parsed_response, model)
+        if iterable?(parsed_response)
+          process_multiple_responses(parsed_response, model)
+        else
+          process_single_response(parsed_response, model)
+        end
       end
 
       # Processes multiple responses from the API.
@@ -146,8 +165,8 @@ module Instructor
       # Checks if the response is iterable.
       #
       # @return [Boolean] `true` if the response is iterable, `false` otherwise.
-      def iterable?
-        @iterable
+      def iterable?(response)
+        @iterable && response.is_a?(Array)
       end
     end
   end

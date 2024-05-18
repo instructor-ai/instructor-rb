@@ -7,7 +7,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-3.5-turbo","messages":[{"role":"user","content":"Extract
         Jason is 25 years old"}],"tools":[{"type":"function","function":{"name":"User","description":"Correctly
-        extracted `User` with all the required parameters with correct types","parameters":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"]}}}]}'
+        extracted `User` with all the required parameters with correct types","parameters":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"]}}}],"tool_choice":{"type":"function","function":{"name":"User"}}}'
     headers:
       Content-Type:
       - application/json
@@ -25,23 +25,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 12 Apr 2024 16:42:28 GMT
+      - Fri, 17 May 2024 21:43:36 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Allow-Origin:
-      - "*"
-      Cache-Control:
-      - no-cache, must-revalidate
-      Openai-Model:
-      - gpt-3.5-turbo-0125
       Openai-Organization:
       - user-jtftkqrbreteg5pmdrfzchv6
       Openai-Processing-Ms:
-      - '924'
+      - '279'
       Openai-Version:
       - '2020-10-01'
       Strict-Transport-Security:
@@ -59,28 +53,28 @@ http_interactions:
       X-Ratelimit-Reset-Tokens:
       - 25ms
       X-Request-Id:
-      - req_fb3f96fec1e6f4452f3675b310e523ee
+      - req_0beb8aa55a830e8bd7e8eed01a05f3c0
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - __cf_bm=TM71z7WYp9ttDt4u8zLfJWURb4n0Lz3MhpFwLMlWppE-1712940148-1.0.1.1-i6q9bnj6YEJORX5UGy_H3Fl21oHarzJiHlId.HH2TwzRuOQWzz99py9r5_DJsjZqfEpFEnvXUR4Qr7TZOBy1YA;
-        path=/; expires=Fri, 12-Apr-24 17:12:28 GMT; domain=.api.openai.com; HttpOnly;
+      - __cf_bm=XgFm9EbhV9_dCJnOyPugQGI.kXwrbCdRMOUM.aYIj44-1715982216-1.0.1.1-73M1D9t7hChSuX90po2Iyk26I1LElUZMiexlToP_fUTSu5kWd4KCfUbThlUttI2K0ZX4gHtk1JR13lJ6Au4oKQ;
+        path=/; expires=Fri, 17-May-24 22:13:36 GMT; domain=.api.openai.com; HttpOnly;
         Secure; SameSite=None
-      - _cfuvid=0QzFTZ5nP6xnEiFL5_uol74KrYjnOkiggomlLw4THJk-1712940148605-0.0.1.1-604800000;
+      - _cfuvid=l1RnAIP4_bCW3R17g4Yh9oJuKE.stp0kZcHGI_O8ddE-1715982216818-0.0.1.1-604800000;
         path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
       Server:
       - cloudflare
       Cf-Ray:
-      - 8734ab723ef74c0a-MIA
+      - 8856c8b47de36db3-MIA
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-9DEGpBfHqcS17uJtx1vxpRMEb4DtK",
+          "id": "chatcmpl-9PzeSAbfLl2wMV4tuBGPZjIW35bHD",
           "object": "chat.completion",
-          "created": 1712940147,
+          "created": 1715982216,
           "model": "gpt-3.5-turbo-0125",
           "choices": [
             {
@@ -90,25 +84,25 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_ljjAxRNujNWmDhrlJW2DLprK",
+                    "id": "call_6t9IRWIHRRjInUG3kMAflgRi",
                     "type": "function",
                     "function": {
                       "name": "User",
-                      "arguments": "{\"name\": \"Jason\", \"age\": 25}"
+                      "arguments": "{\"name\":\"Jason\",\"age\":25}"
                     }
                   }
                 ]
               },
               "logprobs": null,
-              "finish_reason": "tool_calls"
+              "finish_reason": "stop"
             }
           ],
           "usage": {
-            "prompt_tokens": 63,
-            "completion_tokens": 32,
-            "total_tokens": 95
+            "prompt_tokens": 71,
+            "completion_tokens": 9,
+            "total_tokens": 80
           },
-          "system_fingerprint": "fp_c2295e73ad"
+          "system_fingerprint": null
         }
-  recorded_at: Fri, 12 Apr 2024 16:42:28 GMT
+  recorded_at: Fri, 17 May 2024 21:43:36 GMT
 recorded_with: VCR 6.2.0
