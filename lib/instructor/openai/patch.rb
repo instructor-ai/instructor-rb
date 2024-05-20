@@ -29,6 +29,8 @@ module Instructor
       # @param validation_context [Hash] The validation context for the parameters. Optional.
       # @return [Object] The processed response.
       def chat(parameters:, response_model: nil, max_retries: 0, validation_context: nil)
+        return json_post(path: '/chat/completions', parameters:) if response_model.nil?
+
         with_retries(max_retries, [JSON::ParserError, Instructor::ValidationError, Faraday::ParsingError]) do
           model = determine_model(response_model)
           function = build_function(model)
@@ -103,7 +105,7 @@ module Instructor
       # Determines the response model based on the provided value.
       #
       # @param response_model [Class] The response model class or typed array.
-      # @return [Class] The determined response model class.
+      # @return [Class] The response model.
       def determine_model(response_model)
         if response_model.is_a?(T::Types::TypedArray)
           @iterable = true
