@@ -11,14 +11,15 @@ require_relative 'instructor/mode'
 # Instructor makes it easy to reliably get structured data like JSON from Large Language Models (LLMs)
 # like GPT-3.5, GPT-4, GPT-4-Vision
 module Instructor
-  @@mode = nil
+  @mode = nil
+
   class Error < ::StandardError; end
 
   # The ValidationError class represents an error that occurs during validation.
   class ValidationError < ::StandardError; end
 
   def self.mode
-    @@mode
+    @mode
   end
 
   # Patches the OpenAI client to add the following functionality:
@@ -30,7 +31,7 @@ module Instructor
   # @param mode [Symbol] The mode to be used. Default is `Instructor::Mode::TOOLS.function`.
   # @return [OpenAI::Client] The patched OpenAI client.
   def self.patch(openai_client, mode: Instructor::Mode::TOOLS.function)
-    @@mode = mode
+    @mode = mode
     openai_client.prepend(Instructor::OpenAI::Patch)
   end
 end

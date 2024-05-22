@@ -2,9 +2,9 @@
 
 require 'spec_helper'
 
-RSpec.describe Instructor, 'tools mode' do
+RSpec.describe Instructor, '.class' do
   it 'returns the mode' do
-    Instructor.patch(OpenAI::Client, mode: Instructor::Mode::TOOLS.function)
-    expect(Instructor.mode).to eq(Instructor::Mode::TOOLS.function)
+    described_class.patch(OpenAI::Client, mode: Instructor::Mode::TOOLS.function)
+    expect(described_class.mode).to eq(Instructor::Mode::TOOLS.function)
   end
 end
