@@ -6,9 +6,9 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"gpt-3.5-turbo","messages":[{"role":"system","content":"Extract
-        the names and ages of the users"},{"role":"user","content":"Extract `Jason
-        is 25 and Peter is 32`"}],"tools":[{"type":"function","function":{"name":"Userdetail","description":"Correctly
-        extracted `UserDetail` with all the required parameters with correct types","parameters":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"]}}}]}'
+        the names and ages of all the users"},{"role":"user","content":"Extract `Jason
+        is 25 and Peter is 32`"}],"tools":[{"type":"function","function":{"name":"Users","description":"Correctly
+        extracted `Users` with all the required parameters with correct types","parameters":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"]}}}],"tool_choice":"required"}'
     headers:
       Content-Type:
       - application/json
@@ -26,23 +26,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 16 Apr 2024 15:04:55 GMT
+      - Sat, 18 May 2024 01:35:47 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Allow-Origin:
-      - "*"
-      Cache-Control:
-      - no-cache, must-revalidate
-      Openai-Model:
-      - gpt-3.5-turbo-0125
       Openai-Organization:
       - user-jtftkqrbreteg5pmdrfzchv6
       Openai-Processing-Ms:
-      - '1230'
+      - '901'
       Openai-Version:
       - '2020-10-01'
       Strict-Transport-Security:
@@ -54,34 +48,34 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '9999'
       X-Ratelimit-Remaining-Tokens:
-      - '59963'
+      - '59962'
       X-Ratelimit-Reset-Requests:
       - 8.64s
       X-Ratelimit-Reset-Tokens:
-      - 37ms
+      - 38ms
       X-Request-Id:
-      - req_5978adf14630bce369c097496566e46b
+      - req_e541e0199ba8ab4969cebaa93ecf7621
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - __cf_bm=Ub.5xSZssWWJ8H2Sd0iqSG78783SCYtnIABsnrBHDTA-1713279895-1.0.1.1-DCNmVcymXLGdBZXTJ8RHqFcsCfRVc5jB9OEpas8F4i2QO7DkHe776IEc.d_c7zojGyQNmYNmEfHK4XD0qseyiA;
-        path=/; expires=Tue, 16-Apr-24 15:34:55 GMT; domain=.api.openai.com; HttpOnly;
+      - __cf_bm=Vw9tLN_5v0HADGwDxZlp_Xsteou0sxwUhw2uxhb2w.k-1715996147-1.0.1.1-44Ok_xULGiNWAg1PtLfVhxfNW1n4v.YZwAxEAFUFk7R2vJwYJA0bOiew0M7VI.F3mFVplHj4A_VfVZgbXyOm1Q;
+        path=/; expires=Sat, 18-May-24 02:05:47 GMT; domain=.api.openai.com; HttpOnly;
         Secure; SameSite=None
-      - _cfuvid=WE1vPzDS3a87IPKveVY4ua6e.t6K5GXY92Jzmf1WJp4-1713279895707-0.0.1.1-604800000;
+      - _cfuvid=798B92b1HxrrOu9V8vLMsh5LvISIS._fwZvtGrxmwzs-1715996147279-0.0.1.1-604800000;
         path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
       Server:
       - cloudflare
       Cf-Ray:
-      - 8755120b6dedd9b1-MIA
+      - 88581cc9aeae335e-MIA
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-9EeecOmDM1tDAYAqo0UWAkfNclRUD",
+          "id": "chatcmpl-9Q3H8gCBtHqh2I1IS8JRDnVEhy5vM",
           "object": "chat.completion",
-          "created": 1713279894,
+          "created": 1715996146,
           "model": "gpt-3.5-turbo-0125",
           "choices": [
             {
@@ -91,33 +85,33 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_T78AQrDJirC6ZUEzYbOG6Y4f",
+                    "id": "call_ZjPBhmR9P86MQv1GuKct4pyx",
                     "type": "function",
                     "function": {
-                      "name": "Userdetail",
+                      "name": "Users",
                       "arguments": "{\"name\": \"Jason\", \"age\": 25}"
                     }
                   },
                   {
-                    "id": "call_0Euy1wOQ2xhQ5AuWz5vZdRFR",
+                    "id": "call_yaCW68EMq8VYIACaXdAZrc9z",
                     "type": "function",
                     "function": {
-                      "name": "Userdetail",
+                      "name": "Users",
                       "arguments": "{\"name\": \"Peter\", \"age\": 32}"
                     }
                   }
                 ]
               },
               "logprobs": null,
-              "finish_reason": "tool_calls"
+              "finish_reason": "stop"
             }
           ],
           "usage": {
-            "prompt_tokens": 79,
-            "completion_tokens": 51,
-            "total_tokens": 130
+            "prompt_tokens": 80,
+            "completion_tokens": 47,
+            "total_tokens": 127
           },
-          "system_fingerprint": "fp_c2295e73ad"
+          "system_fingerprint": null
         }
-  recorded_at: Tue, 16 Apr 2024 15:04:55 GMT
+  recorded_at: Sat, 18 May 2024 01:35:47 GMT
 recorded_with: VCR 6.2.0

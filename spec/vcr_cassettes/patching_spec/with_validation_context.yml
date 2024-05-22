@@ -7,8 +7,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-3.5-turbo","messages":[{"role":"user","content":"Answer
         the question: What is your name and age? with the text chunk: my name is Jason
-        and I turned 25 years old yesterday"}],"tools":[{"type":"function","function":{"name":"User","description":"Correctly
-        extracted `User` with all the required parameters with correct types","parameters":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"]}}}]}'
+        and I turned 25 years old yesterday"}],"tools":[{"type":"function","function":{"name":"SomeUser","description":"Extract
+        the user''s name and age.","parameters":{"type":"object","title":"SomeUser","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"]}}}],"tool_choice":{"type":"function","function":{"name":"SomeUser"}}}'
     headers:
       Content-Type:
       - application/json
@@ -26,23 +26,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 12 Apr 2024 18:54:50 GMT
+      - Fri, 17 May 2024 21:38:40 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Allow-Origin:
-      - "*"
-      Cache-Control:
-      - no-cache, must-revalidate
-      Openai-Model:
-      - gpt-3.5-turbo-0125
       Openai-Organization:
       - user-jtftkqrbreteg5pmdrfzchv6
       Openai-Processing-Ms:
-      - '256'
+      - '380'
       Openai-Version:
       - '2020-10-01'
       Strict-Transport-Security:
@@ -56,32 +50,32 @@ http_interactions:
       X-Ratelimit-Remaining-Tokens:
       - '59952'
       X-Ratelimit-Reset-Requests:
-      - 13.977s
+      - 16.422s
       X-Ratelimit-Reset-Tokens:
       - 48ms
       X-Request-Id:
-      - req_52e4c03c8777094877347c6a60a63361
+      - req_b75552a51b70614ba55e34bc8f46df80
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - __cf_bm=kQqYccApBVof3EwIzYXmPQGQS_2gWR023Hg_0xtqtmY-1712948090-1.0.1.1-eH9Yyo5hZ20gQtMErfNO8x58iPJ8tMLaYSENjsZ34yhoZFp0xtng71UCY8wv5DsI_AX6n6Zo5e_imUpRBWdLAw;
-        path=/; expires=Fri, 12-Apr-24 19:24:50 GMT; domain=.api.openai.com; HttpOnly;
+      - __cf_bm=f9c6ADDiOU1NPe3yv0iVc04Ol9CdLniiKCNTBo4Uk14-1715981920-1.0.1.1-u0cGWsKcgvFBXiPMxrO30A09FPBs3nQPk.s_FIAALRxQ52Yb0oPM7Jj_TzCbKRs2L03szG9fhbn462mYBWFzhg;
+        path=/; expires=Fri, 17-May-24 22:08:40 GMT; domain=.api.openai.com; HttpOnly;
         Secure; SameSite=None
-      - _cfuvid=W0GvuzODk6a4I3WgPSzfW.nYJ7BBaqv92F4rdp53NFQ-1712948090879-0.0.1.1-604800000;
+      - _cfuvid=QibJLZjeMze7JqBsIiNn8haLvSu3cGDyhzKtW0yu9Ws-1715981920116-0.0.1.1-604800000;
         path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
       Server:
       - cloudflare
       Cf-Ray:
-      - 87356d5c5b40d9e9-MIA
+      - 8856c175cf710331-MIA
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-9DGKwJplGKpHdxRvWjAZzkKt6aE50",
+          "id": "chatcmpl-9PzZfj3nY4z0btlRlNo23t4uooL0p",
           "object": "chat.completion",
-          "created": 1712948090,
+          "created": 1715981919,
           "model": "gpt-3.5-turbo-0125",
           "choices": [
             {
@@ -91,25 +85,25 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_0FYOXWu3BJsYeWb0xXQA1lH6",
+                    "id": "call_ul0rzkJ5DEOx2O52v05JQT5H",
                     "type": "function",
                     "function": {
-                      "name": "User",
+                      "name": "SomeUser",
                       "arguments": "{\"name\":\"Jason\",\"age\":25}"
                     }
                   }
                 ]
               },
               "logprobs": null,
-              "finish_reason": "tool_calls"
+              "finish_reason": "stop"
             }
           ],
           "usage": {
-            "prompt_tokens": 84,
-            "completion_tokens": 17,
-            "total_tokens": 101
+            "prompt_tokens": 91,
+            "completion_tokens": 9,
+            "total_tokens": 100
           },
-          "system_fingerprint": "fp_c2295e73ad"
+          "system_fingerprint": null
         }
-  recorded_at: Fri, 12 Apr 2024 18:54:50 GMT
+  recorded_at: Fri, 17 May 2024 21:38:40 GMT
 recorded_with: VCR 6.2.0

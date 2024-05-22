@@ -8,7 +8,7 @@ RSpec.describe 'running an OpenAI function with a multiple object response' do
       include EasyTalk::Model
 
       def self.name
-        'User'
+        'Users'
       end
 
       define_schema do
@@ -18,13 +18,13 @@ RSpec.describe 'running an OpenAI function with a multiple object response' do
     end
   end
 
-  let(:client) { Instructor.patch(OpenAI::Client).new }
+  let(:client) { Instructor.patch(OpenAI::Client, mode: Instructor::Mode::TOOLS.required).new }
 
   let(:parameters) do
     {
       model: 'gpt-3.5-turbo',
       messages: [
-        { role: 'system', content: 'Extract the names and ages of the users' },
+        { role: 'system', content: 'Extract the names and ages of all the users' },
         { role: 'user', content: 'Extract `Jason is 25 and Peter is 32`' }
       ]
     }

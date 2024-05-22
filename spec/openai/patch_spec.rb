@@ -188,4 +188,18 @@ RSpec.describe Instructor::OpenAI::Patch do
       end.to raise_error(Instructor::ValidationError)
     end
   end
+
+  describe 'when the client is used ia a standard manner' do
+    it 'does not raise an error when the client is used in a standard manner', vcr: 'patching_spec/standard_usage' do
+      response = patched_client.new.chat(
+        parameters: {
+          model: 'gpt-3.5-turbo',
+          messages: [{ role: 'user', content: 'How is the weather today in New York?' }]
+        }
+      )
+
+      expect(response).to be_a(Hash)
+      expect(response.dig('choices', 0, 'message', 'content')).to be_a(String)
+    end
+  end
 end
