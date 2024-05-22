@@ -3,8 +3,17 @@
 require 'spec_helper'
 
 RSpec.describe Instructor, '.class' do
-  it 'returns the mode' do
-    described_class.patch(OpenAI::Client, mode: Instructor::Mode::TOOLS.function)
+  it 'returns nil for mode' do
+    expect(described_class.mode).to be_nil
+  end
+
+  it 'returns the default mode after patching' do
+    described_class.patch(OpenAI::Client)
     expect(described_class.mode).to eq(Instructor::Mode::TOOLS.function)
+  end
+
+  it 'changes the the mode' do
+    described_class.patch(OpenAI::Client, mode: Instructor::Mode::TOOLS.auto)
+    expect(described_class.mode).to eq(Instructor::Mode::TOOLS.auto)
   end
 end
