@@ -20,6 +20,13 @@ If you want to port Instructor to another language, please reach out to us on [T
 
 To check out all the tips and tricks to prompt and extract data, check out the [documentation](https://instructor-ai.github.io/instructor-rb/tips/prompting/).
 
+Installation is as simple as:
+
+```bash
+gem install intructor-rb
+```
+
+
 ```Ruby
 require 'instructor-rb'
 
@@ -65,11 +72,9 @@ The question of using Instructor is fundamentally a question of why to use zod.
 
 If you'd like to see more check out our [cookbook](examples/index.md).
 
-[Installing Instructor](installation.md) is a breeze. 
-
 ## Contributing
 
-If you want to help out, checkout some of the issues marked as `good-first-issue` or `help-wanted`. Found [here](https://github.com/instructor-ai/instructor-js/labels/good%20first%20issue). They could be anything from code improvements, a guest blog post, or a new cook book.
+If you want to help out, checkout some of the issues marked as `good-first-issue` or `help-wanted`. Found [here](https://github.com/instructor-ai/instructor-rb/labels/good%20first%20issue). They could be anything from code improvements, a guest blog post, or a new cook book.
 
 ## License
 

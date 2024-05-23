@@ -2,9 +2,9 @@ We would love for you to contribute to `Instructor-rb`.
 
 ## Migrating Docs from Python
 
-Theres a bunch of examples in the python version, including documentation here [python docs](https://jxnl.github.io/instructor/examples/)
+Theres a bunch of examples in the python version, including documentation here [python docs](https://useinstructor.com/examples/)
 
-If you want to contribute, please check out [issues](https://github.com/instructor-ai/instructor/issues)
+If you want to contribute, please check out [issues](https://github.com/instructor-ai/instructor-rb/issues)
 
 ## Issues
 
@@ -35,13 +35,11 @@ bundle install
 2. **Environment Variables**:
 setup the OpenAI API key in your environment variables.
 
-```bash
-
-### Code Quality Tools
+**Code Quality Tools**
 
 - This project uses rubocop.
 
-### Running Tests
+**Running Tests**
 
 - Execute tests using the following command:
 
@@ -69,7 +67,7 @@ If it is not a small change, please start by [filing an issue](https://github.co
 
 ## Contributors
 
-<a href="https://github.com/jxnl/instructor/graphs/contributors">
+<a href="https://github.com/instructor-ai/instructor-rb/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=instructor-ai/instructor-rb" />
 </a>
 

@@ -128,7 +128,7 @@ nav:
     - Patching: 'concepts/patching.md'
     - Streaming: 'concepts/streaming.md'
     - Logging: 'concepts/logging.md'
-    - Prompting Tips: 'tips/prompting.md'
+    - Prompting Tips: 'concepts/prompting.md'
     - Philosophy: 'concepts/philosophy.md'
     - Help with Instructor: 'help.md'
     - Installation: 'installation.md'
