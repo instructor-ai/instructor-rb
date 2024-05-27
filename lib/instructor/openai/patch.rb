@@ -30,6 +30,16 @@ module Instructor
         end
       end
 
+      # Processes the API response.
+      #
+      # @param response [Hash] The API response.
+      # @param model [Class] The response model class.
+      # @return [Object] The processed response.
+      def process_response(response, model)
+        parsed_response = Response.new(response).parse
+        iterable? ? process_multiple_responses(parsed_response, model) : process_single_response(parsed_response, model)
+      end
+
       private
 
       def resolve_tool_choice(function_name)

@@ -64,7 +64,7 @@ RSpec.describe Instructor::Anthropic::Patch do
     before do
       allow(client).to receive(:determine_model).and_return(double)
       allow(client).to receive(:build_function).and_return(double)
-      allow(client).to receive(:prepare_parameters).and_return(double)
+      allow(client).to receive(:prepare_parameters).and_return({})
       allow(client).to receive(:process_response).and_return(double)
       allow(::Anthropic::Client).to receive(:json_post).and_raise(JSON::ParserError)
     end
