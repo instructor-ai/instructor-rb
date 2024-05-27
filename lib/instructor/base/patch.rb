@@ -116,6 +116,27 @@ module Instructor
         end
       end
 
+      # Generates the function name for the API request.
+      # You can customize the function name for the LLM by adding a `title` key to the schema.
+      # Example:
+      # ```ruby
+      # class User
+      #  include EasyTalk::Model
+      #  define_schema do
+      #    title 'User'
+      #    property :name, String
+      #    property :age, Integer
+      #  end
+      # end
+      #  ```
+      #  The function name will be `User`.
+      #  If the `title` key is not present, the function name will be the model's name.
+      #  @param model [Class] The response model class.
+      #  @return [String] The generated function name.
+      def generate_function_name(model)
+        model.schema.fetch(:title, model.name)
+      end
+
       # Checks if the response is iterable.
       #
       # @return [Boolean] `true` if the response is iterable, `false` otherwise.
