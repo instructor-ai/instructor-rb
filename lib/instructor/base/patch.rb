@@ -91,11 +91,29 @@ module Instructor
       end
 
       # Generates the description for the function.
+      # You can customize the instructions for the LLM by adding an `instructions` class method to the response model.
+      # Example:
+      # ```ruby
+      # class User
+      #   include EasyTalk::Model
+      #   def self.instructions
+      #     'Extract the user name and age from the response'
+      #   end
+      #
+      #   define_schema do ...
+      #  end
+      #  ```
       #
       # @param model [Class] The response model class.
       # @return [String] The generated description.
       def generate_description(model)
-        "Correctly extracted `#{model.name}` with all the required parameters with correct types"
+        if model.respond_to?(:instructions)
+          raise Instructor::Error, 'The instructions must be a string' unless model.instructions.is_a?(String)
+
+          model.instructions
+        else
+          "Correctly extracted `#{model.name}` with all the required parameters with correct types"
+        end
       end
 
       # Checks if the response is iterable.

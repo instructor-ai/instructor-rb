@@ -23,8 +23,25 @@ module Instructor
           model = determine_model(response_model)
           function = build_function(model)
           parameters = prepare_parameters(parameters, validation_context, function)
+          tool_choice = resolve_tool_choice(function[:function][:name])
+          parameters.merge!(tool_choice:)
           response = json_post(path: '/chat/completions', parameters:)
           process_response(response, model)
+        end
+      end
+
+      private
+
+      def resolve_tool_choice(function_name)
+        case Instructor.mode
+        when Instructor::Mode::TOOLS.function
+          { type: 'function', function: { name: function_name } }
+        when Instructor::Mode::TOOLS.auto
+          'auto'
+        when Instructor::Mode::TOOLS.required
+          'required'
+        when Instructor::Mode::TOOLS.none
+          'none'
         end
       end
 
