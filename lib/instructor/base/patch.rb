@@ -2,7 +2,57 @@
 
 module Instructor
   module Base
+    # The `Patch` module provides common methods for patching and modifying the client behavior.
     module Patch
+      # Generates the function name for the API request.
+      # You can customize the function name for the LLM by adding a `title` key to the schema.
+      # Example:
+      # ```ruby
+      # class User
+      #  include EasyTalk::Model
+      #  define_schema do
+      #    title 'User'
+      #    property :name, String
+      #    property :age, Integer
+      #  end
+      # end
+      #  ```
+      #  The function name will be `User`.
+      #  If the `title` key is not present, the function name will be the model's name.
+      #  @param model [Class] The response model class.
+      #  @return [String] The generated function name.
+      def generate_function_name(model)
+        model.schema.fetch(:title, model.name)
+      end
+
+      # Generates the description for the function.
+      # You can customize the instructions for the LLM by adding an `instructions` class method to the response model.
+      # Example:
+      # ```ruby
+      # class User
+      #   include EasyTalk::Model
+      #   def self.instructions
+      #     'Extract the user name and age from the response'
+      #   end
+      #
+      #   define_schema do ...
+      #  end
+      #  ```
+      #
+      # @param model [Class] The response model class.
+      # @return [String] The generated description.
+      def generate_description(model)
+        if model.respond_to?(:instructions)
+          raise Instructor::Error, 'The instructions must be a string' unless model.instructions.is_a?(String)
+
+          model.instructions
+        else
+          "Correctly extracted `#{model.name}` with all the required parameters with correct types"
+        end
+      end
+
+      private
+
       # Executes a block of code with retries in case of specific exceptions.
       #
       # @param max_retries [Integer] The maximum number of retries.
@@ -80,53 +130,6 @@ module Instructor
         end
 
         parameters
-      end
-
-      # Generates the description for the function.
-      # You can customize the instructions for the LLM by adding an `instructions` class method to the response model.
-      # Example:
-      # ```ruby
-      # class User
-      #   include EasyTalk::Model
-      #   def self.instructions
-      #     'Extract the user name and age from the response'
-      #   end
-      #
-      #   define_schema do ...
-      #  end
-      #  ```
-      #
-      # @param model [Class] The response model class.
-      # @return [String] The generated description.
-      def generate_description(model)
-        if model.respond_to?(:instructions)
-          raise Instructor::Error, 'The instructions must be a string' unless model.instructions.is_a?(String)
-
-          model.instructions
-        else
-          "Correctly extracted `#{model.name}` with all the required parameters with correct types"
-        end
-      end
-
-      # Generates the function name for the API request.
-      # You can customize the function name for the LLM by adding a `title` key to the schema.
-      # Example:
-      # ```ruby
-      # class User
-      #  include EasyTalk::Model
-      #  define_schema do
-      #    title 'User'
-      #    property :name, String
-      #    property :age, Integer
-      #  end
-      # end
-      #  ```
-      #  The function name will be `User`.
-      #  If the `title` key is not present, the function name will be the model's name.
-      #  @param model [Class] The response model class.
-      #  @return [String] The generated function name.
-      def generate_function_name(model)
-        model.schema.fetch(:title, model.name)
       end
 
       # Checks if the response is iterable.

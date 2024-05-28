@@ -70,8 +70,8 @@ RSpec.describe Instructor::Anthropic::Patch do
     end
 
     it 'retries the specified number of times' do
-      expect(::Anthropic::Client).to receive(:json_post).exactly(max_retries).times
       expect { client.messages(parameters:, response_model:, max_retries:) }.to raise_error(JSON::ParserError)
+      expect(::Anthropic::Client).to have_received(:json_post).exactly(max_retries).times
     end
   end
 
