@@ -26,18 +26,31 @@ Instructor-rb is a Ruby library that makes it a breeze to work with structured o
         require 'instructor'
         ```
 
-  3. At the beginning of your script, initialize and patch the OpenAI client:
+  3. At the beginning of your script, initialize and patch the client:
+
+      For the OpenAI client:
 
         ```ruby
-        client = Instructor.patch(OpenAI::Client)
+        client = Instructor.from_openai(OpenAI::Client)
+        ```
+      For the Anthropic client:
+
+        ```ruby
+        client = Instructor.from_anthropic(Anthropic::Client)
         ```
 
 ## Usage
 
-export your OpenAI API key:
+export your API key:
 
 ```bash
 export OPENAI_API_KEY=sk-...
+```
+
+or for Anthropic:
+
+```bash
+export ANTHROPIC_API_KEY=sk-...
 ```
 
 Then use Instructor by defining your schema in Ruby using the `define_schema` block and [EasyTalk](https://github.com/sergiobayona/easy_talk)'s schema definition syntax. Here's an example in:
@@ -54,7 +67,7 @@ class UserDetail
   end
 end
 
-client = Instructor.patch(OpenAI::Client).new
+client = Instructor.from_openai(OpenAI::Client).new
 
 user = client.chat(
   parameters: {

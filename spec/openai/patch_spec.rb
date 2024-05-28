@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe Instructor::OpenAI::Patch do
-  subject(:patched_client) { Instructor.patch(OpenAI::Client) }
+  subject(:patched_client) { Instructor.from_openai(OpenAI::Client) }
 
   let(:user_model) do
     Class.new do

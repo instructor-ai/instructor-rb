@@ -53,7 +53,7 @@ To extract action items from a meeting transcript, we use the **`extract_action_
 ```Ruby
 
   def extract_action_items(data)
-    client = Instructor.patch(OpenAI::Client).new
+    client = Instructor.from_openai(OpenAI::Client).new
 
     client.chat(
       parameters: {
