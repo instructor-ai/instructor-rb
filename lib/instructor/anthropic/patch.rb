@@ -45,7 +45,7 @@ module Instructor
       # @return [Hash] The function details.
       def build_function(model)
         {
-          name: model.name.humanize.titleize,
+          name: generate_function_name(model),
           description: generate_description(model),
           input_schema: model.json_schema
         }
